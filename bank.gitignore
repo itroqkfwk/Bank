@@ -1,0 +1,32 @@
+# Maven 빌드 산출물
+target
+
+# Gradle 빌드 산출물 (Gradle 사용 시)
+build
+
+# IntelliJ IDEA 관련 파일
+.idea
+.iml
+
+# Eclipse 관련 파일
+.classpath
+.project
+.settings
+
+# VS Code 관련 파일
+.vscode
+
+# 운영체제 관련 파일
+.DS_Store
+Thumbs.db
+
+# 로그 파일
+.log
+
+# 환경별 설정 파일
+application-.properties
+!application.properties
+
+# 그 외 임시 파일
+.tmp
+.swp
