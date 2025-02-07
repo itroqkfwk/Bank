@@ -33,15 +33,4 @@ public class homeController {
 		
 	}
 	
-	@GetMapping("/deposit-page")
-	public String depositPage(Model model) {
-		return "deposit-page";
-	}	
-	
-	@GetMapping("/withdrawal-page")
-	public String withdrawalPage(Model model) {
-		return "withdrawal-page";
-	}	
-	
-	
 }
