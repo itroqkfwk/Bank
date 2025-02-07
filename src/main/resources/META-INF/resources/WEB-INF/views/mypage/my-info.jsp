@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SBank | 마이페이지</title>
-</head>
+<title>Insert title here</title>
 <style>
-        /* 기본 스타일 및 대시보드 공통 스타일 */
+    /* 기본 스타일 및 대시보드 공통 스타일 */
         * {
             margin: 0;
             padding: 0;
@@ -164,79 +163,63 @@
             .main-content {
                 margin-left: 0;
             }
-           
         }
-        
-        .taps.open {
-        	display:block;
-       	}
-       	.taps {
-       		display:none;
-       	}
-       	
-       	.home-link {
-       		text-align:center;
-       	}
-       	.home-link a {
-       		color:white;
-       	}
-       	
-       	.sidebar-body {
-       		max-height:70%;
-       		height:100%;
-       		display:flex;
-       		flex-direction: column;
-       		justify-content: space-between;
-       		
-       	}
 </style>
+</head>
 <body>
-<div class="container">
-	        <!-- 사이드바 -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <div class="profile-image"></div>
-                <h2>홍길동님</h2>
-                <p>일반회원</p>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+            <div class="content-header">
+                <h1>회원정보</h1>
+                <p>회원님의 기본 정보를 확인할 수 있습니다.</p>
             </div>
-            <div class="sidebar-body">
-            <ul class="menu-items">
-                <li class="menu-item active">계좌관리</li>
-                <li class="menu-item">거래내역</li>
-                <li class="menu-item">회원정보</li>
-            </ul>
-            <div class="home-link"><a href="/">홈으로</a></div>
+
+            <!-- 기본 정보 카드 -->
+            <div class="card">
+                <div class="info-card-header">
+                    <span class="info-card-title">기본 정보</span>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">이름</div>
+                    <div class="info-value">홍길동</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">아이디</div>
+                    <div class="info-value">hong123</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">비밀번호</div>
+                    <div class="info-value password-value">••••••••</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">주소</div>
+                    <div class="info-value">서울특별시 강남구 테헤란로 123</div>
+                </div>
+
+                <button class="edit-button">정보 수정</button>
+            </div>
+
+            <!-- 보안 정보 카드 -->
+            <div class="card">
+                <div class="info-card-header">
+                    <span class="info-card-title">보안 정보</span>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">최근 로그인</div>
+                    <div class="info-value">2025.02.05 14:30</div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-label">비밀번호 변경일</div>
+                    <div class="info-value">2025.01.15</div>
+                </div>
             </div>
         </div>
-        
-	    <div class="taps open">
-			<jsp:include page="mypage/my-account-management.jsp" flush="true"/>
-		</div>
-		<div class="taps">
-			<jsp:include page="mypage/my-transaction.jsp" flush="true"/>
-		</div>
-		<div class="taps">
-			<jsp:include page="mypage/my-info.jsp" flush="true"/>
-		</div>
-	 
-	
-</div>
 </body>
-<script src="webjars/jquery/3.6.0/jquery.min.js"></script>  
-<script>
-$(document).ready(function () {
-	  $('.menu-item').on("click", function () {
-	    let index = $(this).index(); // 클릭한 메뉴의 인덱스를 가져옴
-
-	    $('.menu-item').removeClass("active"); // 모든 메뉴에서 active 제거
-	    $(this).addClass("active"); // 클릭한 메뉴에 active 추가
-
-	    $('.taps').removeClass("open"); // 모든 탭에서 open 제거
-	    $('.taps').eq(index).addClass("open"); // 클릭한 메뉴의 인덱스에 해당하는 탭에 open 추가
-	  });
-	});
-
-
-	
-</script>
 </html>

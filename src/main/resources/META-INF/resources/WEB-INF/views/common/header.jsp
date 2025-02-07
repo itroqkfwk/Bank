@@ -9,7 +9,7 @@
 <body>
 	<header>
 	  <h1>
-	    <a href="#">
+	    <a href="/">
 	      <div class="brand-icon"></div>
 	      <span> BS 은행</span>
 	    </a>

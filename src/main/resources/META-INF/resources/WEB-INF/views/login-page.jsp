@@ -7,8 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="common/header.jsp" flush="true"/><br>
-	<jsp:include page="member/login-form.jsp" flush="true"/>
-	
+	<jsp:include page="auth/login-form.jsp" flush="true"/>
 </body>
 </html>

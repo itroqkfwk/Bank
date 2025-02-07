@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<jsp:include page="auth/signup-form.jsp" flush="true"/>
 </body>
 </html>
