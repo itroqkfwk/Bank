@@ -17,4 +17,20 @@ public class homeController {
 		return "home-page";
 	}
 	
+	@GetMapping("/login-page")
+	public String loginPage(Model model) {
+		return "login-page";
+	}
+	
+	@GetMapping("/signup-page")
+	public String signupPage(Model model) {
+		return "signup-page";
+	}
+	
+	@GetMapping("/mypage")
+	public String myPage(Model model) {
+		return "my-page";
+		
+	}
+	
 }

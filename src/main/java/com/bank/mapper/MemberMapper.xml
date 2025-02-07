@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exam.mapper.MemberMapper">
+   
+	
+	<select id="idCheck" parameterType="string" resultType="MemberDTO">
+	   select userid, username, password, email, address, roles
+	   from Uesers
+	   where userid = #{userid}
+	</select>
+	
+	<insert id="memberAdd" parameterType="MemberDTO">
+	   insert into member (userid, password, email, address, roles)
+	   values ( #{userid}, #{password}, #{email}, #{address}, #{roles} )
+	   
+	</insert>
+	 
+	 
+	<select id="login" parameterType="hashmap" resultType="MemberDTO">
+	   select userid
+	   from Users
+	   where userid = #{userid} and password = #{password}
+	</select>
+	 
+	 
+	 
+	 <select id="mypage" parameterType="string" resultType="MemberDTO">
+		select userid
+		from Users
+		where userid = #{userid}
+	 </select>
+	 
+	  
+	 <select id="findByUserid" resultType="MemberDTO" parameterType="string">
+	     select userid, password, username
+	     from Users
+	     where userid=#{userid}
+	 </select>
+	 
+	 </mapper>

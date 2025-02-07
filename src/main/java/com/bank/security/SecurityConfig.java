@@ -31,24 +31,6 @@ public class SecurityConfig {
 		                               .permitAll()
 				                  );
 		
-//		//사용자 만든 로그인 정보 설정
-//		// requestMatchers에서 permitAll() 지정한 요청맵핑값을 제외한 모든 요청은 login화면으로 리다이렉트됨.
-//		http.formLogin(formLogin->
-//		                  formLogin.loginPage("/login") //LoginController 의 @GetMapping(value={"/login"}) 값
-//				                   .loginProcessingUrl("/auth") // loginForm.jsp 의 <form action="auth"> 값
-//				                   .usernameParameter("userid") // loginForm.jsp 의 <input type="text" name="userid"  />
-//				                   .passwordParameter("passwd") // loginForm.jsp 의 <input type="password" name="passwd"  />
-//				                   .failureUrl("/login") //로그인 실패시 redirect 된 요청매핑값
-//				                   .defaultSuccessUrl("/home", true) //로그인 성공시 redirect 된 요청매핑값
-//				      );
-//		
-//		// 로그아웃 설정
-//		http.logout((logout) ->
-//				        logout.deleteCookies("remove")
-//				        .invalidateHttpSession(true)
-//				        .logoutUrl("/logout")  // SpringSecurity가 자동으로 로그아웃 처리해줄 요청매핑값
-//				        .logoutSuccessUrl("/home") // logout 성공시 redirect 된 요청매핑값
-//                   );
 		
 		return http.build();
 	}
@@ -64,3 +46,4 @@ public class SecurityConfig {
 	                      );
 	}
 }
+

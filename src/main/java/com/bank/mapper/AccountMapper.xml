@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bank.mapper.AccountMapper">
+   
+	<select id="selectAllAccounts" resultType="com.bank.dto.AccountDTO">
+        SELECT id, account_name, account_no, money FROM Accounts;
+    </select>
+
+    <select id="selectAccountById" parameterType="int" resultType="com.bank.dto.AccountDTO">
+        SELECT id, account_name, account_no, money FROM Accounts WHERE id = #{id};
+    </select>
+
+    <insert id="insertAccount" parameterType="com.bank.dto.AccountDTO">
+        INSERT INTO Accounts (account_name, account_no, money)
+        VALUES (#{account_name}, #{account_no}, #{money});
+    </insert>
+
+    <update id="updateAccount" parameterType="com.bank.dto.AccountDTO">
+        UPDATE Accounts
+        SET account_name = #{account_name},
+            money = #{money}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="deleteAccount" parameterType="int">
+        DELETE FROM Accounts WHERE id = #{id};
+    </delete>
+    
+</mapper>
