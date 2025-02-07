@@ -5,6 +5,9 @@ import java.util.List;
 import com.bank.dto.AccountDTO;
 
 public interface AccountService {
-	List<AccountDTO> getAccountList();
-
+	List<AccountDTO> getAllAccounts();
+    AccountDTO getAccountById(int id);
+    void addAccount(AccountDTO account);
+    void updateAccount(AccountDTO account);
+    void deleteAccount(int id);
 }

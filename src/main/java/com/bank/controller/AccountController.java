@@ -1,15 +1,16 @@
 package com.bank.controller;
 
 import com.bank.service.AccountService;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import com.bank.dto.AccountDTO;
 
-@RestController
+@Controller
 public class AccountController {
 
-    private final AccountService accountService;
+    AccountService accountService;
 
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
@@ -17,6 +18,8 @@ public class AccountController {
 
     @GetMapping("/accounts")
     public List<AccountDTO> getAllAccounts() {
-        return accountService.getAccountList();
+        return accountService.getAllAccounts();
     }
+    
+    
 }

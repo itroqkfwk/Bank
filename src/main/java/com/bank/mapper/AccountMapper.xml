@@ -11,7 +11,7 @@
     <select id="selectAccountById" parameterType="int" resultType="com.bank.dto.AccountDTO">
         SELECT id, account_name, account_no, money FROM Accounts WHERE id = #{id};
     </select>
-
+	
     <insert id="insertAccount" parameterType="com.bank.dto.AccountDTO">
         INSERT INTO Accounts (account_name, account_no, money)
         VALUES (#{account_name}, #{account_no}, #{money});
@@ -28,4 +28,25 @@
         DELETE FROM Accounts WHERE id = #{id};
     </delete>
     
+    <insert id="AccounAdd" parameterType="MemberDTO">
+	   insert into member (userid,
+	                       passwd,
+	                       username,
+	                       addess,
+	                       email
+	                       )
+	   values ( #{userid},
+	            #{passwd},
+	            #{username},
+	            #{addess},
+	            #{email}
+	           )
+	   
+	</insert>
+	
+	<delete id="AccountDelete" parameterType="int">
+	    delete from member
+		where userid = #{userid}
+	</delete>
+	 
 </mapper>
