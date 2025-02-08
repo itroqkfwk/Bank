@@ -8,73 +8,6 @@
 </head>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-   background-color: #1a365d;
-}
-
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-header {
-  height: 60px;
-  padding: 10px 40px 10px 40px;
-  width: 100%;
-  background: transparent;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  
-}
-
-header h1 a {
-  display: flex;
-  align-items: center;
-    color:white;
-}
-
-header .brand-icon {
-  width: 30px;
-  height: 30px;
-  background: white;
-  margin-right: 8px;
-}
-
-.navlist-group {
-  display: flex;
-}
-
-.navlist-group li {
-  padding: 0 1rem 3px 1rem;
-}
-
-.navlist-group li:hover{
-	box-shadow:0 1px 0 0 white;
-}
-
-.navlist-group li a:active{
-	color: #1054B4;
-}
-
-.navlist-group li a {
-	color:white;
-}
-
 .container {
   width: 100%;
   height: 100%;
@@ -149,7 +82,7 @@ header .brand-icon {
 
     <div class="card">
       <p>
-        <a href="#">
+        <a href="/deposit-page">
           입금하기
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3" />
@@ -160,7 +93,7 @@ header .brand-icon {
     </div>
     <div class="card">
       <p>
-        <a href="#">
+        <a href="/withdrawal-page">
           출금하기
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 		  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

@@ -18,9 +18,9 @@ import lombok.ToString;
 public class MemberDTO {
 	
 //	@NotBlank(message = "userid 필수")
-	String userid;
-	String username;
-	String password;
+	private String userid;
+	private String username;
+	private String password;
 	String email;
 	String address;
 	String roles;
