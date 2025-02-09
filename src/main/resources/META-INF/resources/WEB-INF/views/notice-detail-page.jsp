@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SBank | 공지사항</title>
+<title>SBank | 처리하기</title>
 </head>
 <body>
 	<jsp:include page="common/header.jsp" flush="true"/><br>
-	<jsp:include page="notice/notice-main.jsp" flush="true"/>
+	<jsp:include page="notice/notice-detail.jsp" flush="true"/>
 </body>
 </html>

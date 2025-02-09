@@ -11,7 +11,7 @@
         .notice-board {
             max-width: 1200px;
             width:100%;
-            margin: 0 auto;
+            margin: 3rem auto;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -82,6 +82,10 @@
         .write-btn:hover {
             background-color: #152c4e;
         }
+        
+        .write-btn a {
+        	color:white;
+        }
 
         .pagination {
             display: flex;
@@ -110,10 +114,7 @@
 
 </style>
 </head>
- <% 
- 	
- 
- %>
+
 <body>
     <div class="notice-board">
         <div class="board-header">
@@ -137,7 +138,7 @@
                 	>
 	                	<tr>
 	                        <td>${notice.id}</td>
-	                        <td class="title-cell">${notice.title}</td>
+	                        <td class="title-cell"><a href="/notice-page/${notice.id}?page=${pageInfo.page}&pageSize=${pageInfo.pageSize}">${notice.title}</a></td>
 	                        <td>${notice.admin.username}</td>
 	                        <td class="date-cell">${notice.createdAt}</td>
 	                        <td class="view-cell">${notice.views} </td>
@@ -146,7 +147,7 @@
                 </tbody>
             </table>
             <button class="write-btn">
-            	<a herf="/notice-write-form">글쓰기</a>
+            	<a href="/notice-write-form">글쓰기</a>
             </button>
             <div class="pagination">
 	            <c:if test="${pageInfo.page>1}">

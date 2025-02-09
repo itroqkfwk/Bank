@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bank.mapper.NoticeMapper">
+
+<resultMap id="NoticeResultMap" type="NoticeDTO">
+    <id property="id" column="id"/>
+    <result property="title" column="title"></result>
+    <result property="contents" column="contents"></result>
+    <result property="createdAt" column="created_at"></result>
+    <result property="views" column="views"></result>
+    <association property="admin" javaType="AdminDTO">
+        <result property="username" column="username"/>
+    </association>
+</resultMap>
+	
+<select id="getNotices" parameterType="string" resultMap="NoticeResultMap">
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') as created_at, n.views,
+           u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    ORDER BY n.id DESC
+</select>
+
+<select id="getNoticeById" parameterType="long" resultMap="NoticeResultMap">
+(
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') AS created_at, 
+           n.views, u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    WHERE n.id &lt; #{id}
+    ORDER BY n.id DESC
+    LIMIT 1
+) 
+UNION ALL
+(
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') AS created_at, 
+           n.views, u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    WHERE n.id = #{id}
+) 
+UNION ALL
+(
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') AS created_at, 
+           n.views, u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    WHERE n.id > #{id}
+    ORDER BY n.id ASC
+    LIMIT 1
+);
+
+</select>
+
+<select id="getNoticeCount" resultType="int">
+    SELECT COUNT(*) FROM notices 
+</select>
+	
+	 </mapper>
