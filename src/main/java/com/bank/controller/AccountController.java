@@ -19,6 +19,7 @@ import com.bank.dto.AccountDTO;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/")
+
 public class AccountController {
 
     private final AccountService accountService;

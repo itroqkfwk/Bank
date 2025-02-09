@@ -8,15 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bank.dto.MemberDTO;
 import com.bank.mapper.MemberMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 	
-	MemberMapper mapper;
+	private final MemberMapper mapper;
 
-	public MemberServiceImpl(MemberMapper mapper) {
-		this.mapper = mapper;
-	}
-	
 	@Override
 	public MemberDTO idCheck(String userid) {
 		return mapper.idCheck(userid);

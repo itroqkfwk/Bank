@@ -105,7 +105,7 @@
 
             <div class="form-group">
                 <label for="amount">금액</label>
-                <input type="number" id="amount" placeholder="입금할 금액을 입력하세요" required min="1">
+                <input type="number" id="amount" placeholder="출금할 금액을 입력하세요" required min="1">
                 <div class="error" id="amountError"></div>
             </div>
 
