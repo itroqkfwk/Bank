@@ -249,72 +249,30 @@
                 </div>
             </div>
 
-            <!-- 빠른 메뉴 -->
-            <div class="quick-actions">
-                <div class="action-button">
-                    입금내역
-                </div>
-                <div class="action-button">
-                    계좌개설
-                </div>
-            </div>
 
-            <!-- 최근 거래내역 -->
-            <div class="card">
-                <h2 style="margin-bottom: 20px;">최근 거래내역</h2>
-                <ul class="transaction-list">
-                    <li class="transaction-item">
-                        <div class="transaction-info">
-                            <span style="font-weight: 500;">급여</span>
-                            <span style="color: #718096;">2025-02-05</span>
-                        </div>
-                        <span class="transaction-amount deposit">+500,000원</span>
-                    </li>
-                    <li class="transaction-item">
-                        <div class="transaction-info">
-                            <span style="font-weight: 500;">식비</span>
-                            <span style="color: #718096;">2025-02-04</span>
-                        </div>
-                        <span class="transaction-amount withdraw">-150,000원</span>
-                    </li>
-                    <li class="transaction-item">
-                        <div class="transaction-info">
-                            <span style="font-weight: 500;">환불</span>
-                            <span style="color: #718096;">2025-02-03</span>
-                        </div>
-                        <span class="transaction-amount deposit">+100,000원</span>
-                    </li>
-                </ul>
-            </div>
 
-            <!-- 회원정보 -->
-            <div class="card">
-                <h2 style="margin-bottom: 20px;">회원정보</h2>
-                <form>
-                    <div class="form-group">
-                        <label>이름</label>
-                        <input type="text" value="홍길동" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>이메일</label>
-                        <input type="email" value="hong@example.com" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>휴대폰 번호</label>
-                        <input type="tel" value="010-1234-5678" readonly>
-                    </div>
-                </form>
-            </div>
 
-            <!-- 보안 설정 -->
-            <div class="card">
-                <h2 style="margin-bottom: 20px;">보안 설정</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-primary">비밀번호 변경</button>
-<!--                     <button class="btn btn-primary">보안카드 관리</button> -->
-                    <button class="btn btn-danger">회원 탈퇴</button>
-                </div>
-            </div>
-        </div>
+            
+			            <!-- 계좌 개설 폼 -->
+						<div class="card">
+						    <h2 style="margin-bottom: 20px;">계좌 개설</h2>
+						    <form action="/add" method="post">
+						        <div class="form-group">
+						            <label for="account_name">계좌 이름</label>
+						            <input type="text" id="account_name" name="account_name" placeholder="계좌 이름" required>
+						        </div>
+						        <div class="form-group">
+						            <label for="account_no">계좌 번호</label>
+						            <input type="text" id="account_no" name="account_no" placeholder="계좌 번호" required>
+						        </div>
+						        <div class="form-group">
+						            <label for="money">초기 금액</label>
+						            <input type="number" id="money" name="money" placeholder="초기 금액" required>
+						        </div>
+						        <button type="submit" class="btn btn-primary">계좌 개설</button>
+						    </form>
+						</div>
+						</div>
+
 </body>
 </html>
