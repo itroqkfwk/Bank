@@ -58,5 +58,11 @@ UNION ALL
 <select id="getNoticeCount" resultType="int">
     SELECT COUNT(*) FROM notices 
 </select>
+
+
+<!-- 공지사항 삭제 -->
+<delete id="deleteById" parameterType="long">
+	DELETE FROM notices n WHERE n.id=#{id}
+</delete>
 	
-	 </mapper>
+</mapper>

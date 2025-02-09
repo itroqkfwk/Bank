@@ -3,8 +3,10 @@ package com.bank.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,5 +93,16 @@ public class NoticeController {
 	    
 	    return "notice-page";
 	}
-
+// 공지사항 삭제
+	@DeleteMapping("/notice-page/{noticeId}")
+	public ResponseEntity<String> deleteNotice(@PathVariable Long noticeId) {
+		
+		log.info("id: {}",noticeId);
+		int n = noticeService.deleteById(noticeId);
+		if(n>0) {
+			return  ResponseEntity.ok("삭제 되었습니다.");
+		} else {
+			 return ResponseEntity.status(400).body("삭제 실패: 존재하지 않는 게시글 ID 입니다.");
+		}
+	}
 }

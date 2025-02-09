@@ -40,5 +40,10 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<NoticeDTO> getNoticeById(Long id) {
 		return noticeMapper.getNoticeById(id);
 	}
+
+	@Override
+	public int deleteById(Long id) {
+		return noticeMapper.deleteById(id);
+	}
 	
 }

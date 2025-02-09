@@ -16,5 +16,6 @@ public interface NoticeMapper {
 	public List<NoticeDTO> getNotices(RowBounds rowBounds);
 	public int getNoticeCount();
 	public List<NoticeDTO> getNoticeById(Long id);
+	public int deleteById(Long id);
 	
 }

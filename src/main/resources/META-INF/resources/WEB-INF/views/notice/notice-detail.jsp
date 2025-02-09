@@ -199,7 +199,7 @@
                 </button>
                 <div>
                     <button class="btn btn-modify">수정</button>
-                    <button class="btn btn-delete">삭제</button>
+                    <button class="btn btn-delete" data-id="${mainNotice.id}">삭제</button>
                 </div>
             </div>
 
@@ -215,4 +215,28 @@
         </div>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+<script>
+$(document).ready(function () {
+	$(".btn-delete").click(function(e){
+		const isDelete = confirm(e.target.dataset.id+"번 게시글을 정말로 삭제하시겠습니까?");
+		if(isDelete){
+	    $.ajax({
+	        type : 'DELETE',
+	        url : '/notice-page/'+e.target.dataset.id ,
+	        success: function(result){
+					alert("삭제 되었습니다.")
+					location.replace("/notice-page?page=1&pageSize=5");
+	        },
+	        error: function (xhr, status, error) {
+	            console.log("삭제 실패:: 서버 측에서 문제 발생", error);
+	        }
+	      })
+		}
+		
+	})
+})
+
+</script>
 </html>

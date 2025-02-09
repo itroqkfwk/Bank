@@ -8,4 +8,5 @@ public interface NoticeService {
 	public int getNoticeCount();
 	public List<NoticeDTO> getNotices(int page, int pageSize);
 	public List<NoticeDTO> getNoticeById(Long id);
+	public int deleteById(Long id);
 }
