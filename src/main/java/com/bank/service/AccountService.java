@@ -10,4 +10,8 @@ public interface AccountService {
     void addAccount(AccountDTO account);
     void updateAccount(AccountDTO account);
     void deleteAccount(int id);
+    boolean checkAccountExists(String accountNo);
+    boolean existsByAccountNo(String accountNo);
+    List<AccountDTO> getAccountsByUserId(int userId, int page, int size);
+    int getTotalAccountsByUserId(int userId);
 }
