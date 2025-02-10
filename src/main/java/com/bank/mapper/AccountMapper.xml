@@ -5,7 +5,7 @@
 <mapper namespace="com.bank.mapper.AccountMapper">
    
 	<select id="selectAllAccounts" resultType="com.bank.dto.AccountDTO">
-        SELECT id, account_name, account_no, money FROM Accounts;
+        SELECT * FROM accounts;
     </select>
 
     <select id="selectAccountById" parameterType="int" resultType="com.bank.dto.AccountDTO">
@@ -27,6 +27,26 @@
     <delete id="deleteAccount" parameterType="int">
         DELETE FROM Accounts WHERE id = #{id};
     </delete>
-
+	
+	<select id="checkAccountExists" resultType="int">
+        SELECT COUNT(*) FROM Accounts WHERE account_no = #{account_no}
+    </select>
 	 
+	<select id="existsByAccountNo" resultType="boolean">
+    SELECT COUNT(*) > 0
+    FROM accounts
+    WHERE account_no = #{accountNo}
+	</select>
+	
+	<select id="selectAccountsByUserId" parameterType="map" resultType="com.bank.dto.AccountDTO">
+    SELECT id, account_name, account_no, money
+    FROM Accounts
+    WHERE user_id = #{userId}
+    LIMIT #{offset}, #{size}
+	</select>
+
+	<select id="countAccountsByUserId" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM accounts WHERE user_id = #{userId};
+    </select>
+	
 </mapper>

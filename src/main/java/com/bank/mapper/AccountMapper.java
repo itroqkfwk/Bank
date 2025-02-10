@@ -1,6 +1,7 @@
 package com.bank.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,5 +18,10 @@ public interface AccountMapper {
     int insertAccount(AccountDTO account);
     int updateAccount(AccountDTO account);
     int deleteAccount(@Param("id") int id);
-	
+    int checkAccountExists(String accountNo);
+    boolean existsByAccountNo(String accountNo);
+    List<AccountDTO> selectAccountsByUserId(Map<String, Object> params);
+    int countAccountsByUserId(@Param("userId") int userId);
+
+
 }
