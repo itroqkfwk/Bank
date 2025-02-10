@@ -36,6 +36,12 @@ public class MemberController {
 		
 		위 JSON이 자바의 MemberDTO에 저장됨
 	*/
+	
+	//회원가입 화면보기
+	@GetMapping("/signup")
+	public String signupForm() {
+		return "memberForm";
+	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<MemberDTO> save(@Valid @RequestBody MemberDTO dto) {
