@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 
 import com.bank.dto.NoticeDTO;
+import com.bank.dto.NoticeViewsDTO;
 import com.bank.dto.PageDTO;
 import com.bank.dto.RequestNoticeDTO;
 
@@ -115,8 +117,32 @@ public class NoticeController {
 	// 공지사항 쓰기 페이지
 	@GetMapping("/notice-editor-page")
 	public String getNoticeEditor(Model model) {
-		 model.addAttribute("RequestNoticeDTO", new RequestNoticeDTO()); // DTO 객체 추가
+		model.addAttribute("RequestNoticeDTO", new RequestNoticeDTO()); // DTO 객체 추가
 		return "notice-editor-page";
+	}
+	
+	// 공지사항 수정 페이지
+	@GetMapping("/notice-update-page/{id}")
+	public String getNoticeUpdateEditor(
+			@PathVariable Long id,
+			Model model
+			) {
+			
+		List<NoticeDTO> noticeDTOs = noticeService.getNoticeById(id);
+		NoticeDTO noticeDTO = noticeDTOs.stream().filter((notice)-> notice.getId() == id).toList().get(0);
+		
+		RequestNoticeDTO initialNotice = RequestNoticeDTO.builder()
+			.id(noticeDTO.getId())
+			.title(noticeDTO.getTitle())
+			.contents(noticeDTO.getContents())
+			.build();
+		
+		log.info("contents:{}", noticeDTO.getContents());
+		RequestNoticeDTO requestNoticeDTO = new RequestNoticeDTO();
+		requestNoticeDTO.setId(noticeDTO.getId());
+		model.addAttribute("RequestNoticeDTO", requestNoticeDTO); // DTO 객체 추가
+		model.addAttribute("oldNotice", initialNotice);
+		return "notice-update-page";
 	}
 	
 	
@@ -137,6 +163,29 @@ public class NoticeController {
 		noticeService.addNotice(requestNoticeDTO);
 		
 		model.addAttribute("success","정상적으로 추가되었습니다.");
+		model.addAttribute("page",1);
+		model.addAttribute("pageSize",5);
+		
+		return "redirect:/notice-page?page=1&pageSize=5";
+	}
+	
+	// 공지사항 수정
+	@PostMapping("/notices/update-submit/{id}")
+	public String updateNotice(
+			@PathVariable Long id,
+	        @ModelAttribute("RequestNoticeDTO") @Valid RequestNoticeDTO requestNoticeDTO, 
+	        BindingResult result, 
+	        Model model) {
+		
+		if(result.hasErrors()) {
+			return "notice-update-page";
+		}
+		
+		requestNoticeDTO.setUserId(-999L);
+		requestNoticeDTO.setId(id);
+		noticeService.updateNotice(requestNoticeDTO);
+		
+		model.addAttribute("success","정상적으로 수정 되었습니다.");
 		model.addAttribute("page",1);
 		model.addAttribute("pageSize",5);
 		
@@ -168,5 +217,18 @@ public class NoticeController {
 		String fileUrl = noticeService.upload(file);
 	    
 	    return ResponseEntity.ok().body(Map.of("url", fileUrl, "message", "파일을 성공적으로 업로드 하였습니다."));
+	}
+	
+	// 조회수 증가
+	@PatchMapping("/notices/views/{id}")
+	public String updateViews(@RequestParam Long id) {
+		
+		 int views = noticeService.getViews(id);
+		 NoticeViewsDTO noticeViewsDTO = new NoticeViewsDTO(id, (long) views);
+		 
+		 noticeService.updateViews(noticeViewsDTO);
+		 
+		 return null;
+		
 	}
 }

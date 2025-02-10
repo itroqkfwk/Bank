@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bank.dto.NoticeDTO;
+import com.bank.dto.NoticeViewsDTO;
 import com.bank.dto.RequestNoticeDTO;
 
 public interface NoticeService {
@@ -15,4 +16,7 @@ public interface NoticeService {
 	public int deleteById(Long id);
 	public int addNotice(RequestNoticeDTO requestNoticeDTO);
 	public String upload(MultipartFile file) throws IOException;
+	public int getViews(long id);
+	public int updateViews(NoticeViewsDTO noticeViewsDTO);
+	public int updateNotice(RequestNoticeDTO requestNoticeDTO);
 }

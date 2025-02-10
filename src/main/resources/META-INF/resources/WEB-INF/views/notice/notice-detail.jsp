@@ -198,7 +198,9 @@
                 	<a href="/notice-page?page=${page}&pageSize=${pageSize}">목록</a>
                 </button>
                 <div>
-                    <button class="btn btn-modify">수정</button>
+                    <button class="btn btn-modify">
+                    	<a href="/notice-update-page/${mainNotice.id}">수정</a>
+                    </button>
                     <button class="btn btn-delete" data-id="${mainNotice.id}">삭제</button>
                 </div>
             </div>
