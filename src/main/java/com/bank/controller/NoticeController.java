@@ -206,6 +206,7 @@ public class NoticeController {
 	}
 	
 
+	
 	// 공지사항 이미지 업로드
 	@PostMapping("/notices/image-upload")
 	public ResponseEntity<?> uploadImage(
