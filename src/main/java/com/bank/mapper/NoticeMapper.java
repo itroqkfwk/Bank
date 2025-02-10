@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.bank.dto.MemberDTO;
 import com.bank.dto.NoticeDTO;
+import com.bank.dto.NoticeViewsDTO;
 import com.bank.dto.RequestNoticeDTO;
 
 
@@ -19,5 +20,8 @@ public interface NoticeMapper {
 	public List<NoticeDTO> getNoticeById(Long id);
 	public int deleteById(Long id);
 	public int addNotice(RequestNoticeDTO requestNoticeDTO);
+	public int updateNotice(RequestNoticeDTO requestNoticeDTO);
+	public int updateViews(NoticeViewsDTO noticeViewsDTO);
+	public int getViews(Long id);
 	
 }

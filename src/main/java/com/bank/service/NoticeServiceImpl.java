@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bank.controller.NoticeController;
 import com.bank.dto.NoticeDTO;
+import com.bank.dto.NoticeViewsDTO;
 import com.bank.dto.RequestNoticeDTO;
 import com.bank.mapper.NoticeMapper;
 
@@ -82,5 +83,19 @@ public class NoticeServiceImpl implements NoticeService {
 	    return "/assets/images/upload/" + newFileName;
 	    
 	}
-	
+
+	@Override
+	public int getViews(long id) {
+		return noticeMapper.getViews(id);
+	}
+
+	@Override
+	public int updateNotice(RequestNoticeDTO requestNoticeDTO) {
+		return noticeMapper.updateNotice(requestNoticeDTO);
+	}
+
+	@Override
+	public int updateViews(NoticeViewsDTO noticeViewsDTO) {
+		return noticeMapper.updateViews(noticeViewsDTO);
+	}
 }

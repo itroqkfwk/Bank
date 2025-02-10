@@ -69,9 +69,31 @@ UNION ALL
 	VALUES(#{title}, #{contents}, #{userId}, 0)
 </insert>
 
+<!-- 공지사항 수정 -->
+<update id="updateNotice" parameterType="RequestNoticeDTO">
+	UPDATE notices 
+	SET title = #{title}, contents = #{contents}
+	WHERE user_id = #{userId} AND id = #{id}
+</update>
+
+
+
 <!-- 공지사항 삭제 -->
 <delete id="deleteById" parameterType="long">
 	DELETE FROM notices n WHERE n.id=#{id}
 </delete>
+
+<!-- 공지사항 조회카운트 수정 -->
+<update id="updateViews" parameterType="NoticeViewsDTO">
+	UPDATE notices 
+	SET views = #{views}
+	WHERE id = #{id}
+</update>
+
+<!-- 공지사항 조회카운트 조회 -->
+<select id="getViews" parameterType="long" resultType="int">
+	SELECT views from notices
+	WHERE id = #{id}
+</select>
 	
 </mapper>
