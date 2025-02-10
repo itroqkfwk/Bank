@@ -14,7 +14,7 @@
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            overflow: hidden;
+            overflow: hidden auto;
             max-height:800px;
             height:100%;
         }
@@ -224,7 +224,7 @@ $(document).ready(function () {
 		if(isDelete){
 	    $.ajax({
 	        type : 'DELETE',
-	        url : '/notice-page/'+e.target.dataset.id ,
+	        url : '/notices/'+e.target.dataset.id ,
 	        success: function(result){
 					alert("삭제 되었습니다.")
 					location.replace("/notice-page?page=1&pageSize=5");
