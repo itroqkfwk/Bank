@@ -14,7 +14,7 @@
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            overflow: hidden;
+            overflow: hidden auto;
             max-height:800px;
             height:100%;
         }
@@ -198,7 +198,9 @@
                 	<a href="/notice-page?page=${page}&pageSize=${pageSize}">목록</a>
                 </button>
                 <div>
-                    <button class="btn btn-modify">수정</button>
+                    <button class="btn btn-modify">
+                    	<a href="/notice-update-page/${mainNotice.id}">수정</a>
+                    </button>
                     <button class="btn btn-delete" data-id="${mainNotice.id}">삭제</button>
                 </div>
             </div>
@@ -224,7 +226,7 @@ $(document).ready(function () {
 		if(isDelete){
 	    $.ajax({
 	        type : 'DELETE',
-	        url : '/notice-page/'+e.target.dataset.id ,
+	        url : '/notices/'+e.target.dataset.id ,
 	        success: function(result){
 					alert("삭제 되었습니다.")
 					location.replace("/notice-page?page=1&pageSize=5");

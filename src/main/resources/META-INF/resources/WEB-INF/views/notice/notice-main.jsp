@@ -132,11 +132,13 @@
                     </tr>
                 </thead>
                 <tbody>
+            
                 	<c:forEach
                 		var="notice"
                 		items="${notices}"
                 	>
 	                	<tr>
+	                	  
 	                        <td>${notice.id}</td>
 	                        <td class="title-cell"><a href="/notice-page/${notice.id}?page=${pageInfo.page}&pageSize=${pageInfo.pageSize}">${notice.title}</a></td>
 	                        <td>${notice.admin.username}</td>
@@ -144,10 +146,13 @@
 	                        <td class="view-cell">${notice.views} </td>
 	                    </tr>
                 	</c:forEach>
+                	<c:if test="${empty notices}">
+                 		<p class="text-align:center">공지사항이 존재하지 않습니다.</p>
+                     </c:if>
                 </tbody>
             </table>
             <button class="write-btn">
-            	<a href="/notice-write-form">글쓰기</a>
+            	<a href="/notice-editor-page">글쓰기</a>
             </button>
             <div class="pagination">
 	            <c:if test="${pageInfo.page>1}">
