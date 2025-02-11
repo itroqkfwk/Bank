@@ -63,25 +63,6 @@ public class NoticeServiceImpl implements NoticeService {
 	public int addNotice(RequestNoticeDTO requestNoticeDTO) {
 		return noticeMapper.addNotice(requestNoticeDTO);
 	}
-	@Override
-	public String upload(MultipartFile file) throws IOException {
-	    // 1. 파일 저장 경로 설정
-	    final String UPLOAD_DIR = "C:/upload/images"; // 운영 환경에 맞게 변경
-	    Files.createDirectories(Paths.get(UPLOAD_DIR)); // 디렉토리 없으면 생성
-
-	    // 2. 파일명 변환 (UUID 추가, 확장자 유지)
-	    String originalFileName = file.getOriginalFilename();
-	    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-	    String newFileName = UUID.randomUUID().toString() + extension;
-
-	    // 3. 파일 저장
-	    Path filePath = Path.of(UPLOAD_DIR, newFileName);
-	    Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-	    // 4. DB에 저장할 경로 반환
-	    return "/assets/images/upload/" + newFileName;
-	    
-	}
 	
 	@Override
 	public String upload(MultipartFile file) throws IOException {
