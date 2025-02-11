@@ -312,13 +312,13 @@
 				<c:if test="${not empty totalPages}">
 				    <div class="pagination">
 				        <c:if test="${currentPage > 0}">
-				            <a href="/mypages?page=${currentPage - 1}" class="btn btn-secondary">이전</a>
+				            <a href="/mypage?page=${currentPage - 1}" class="btn btn-secondary">이전</a>
 				        </c:if>
 				        <c:forEach var="i" begin="0" end="${totalPages - 1}" step="1">
-				            <a href="/mypages?page=${i}" class="btn btn-secondary ${currentPage == i ? 'active' : ''}">${i + 1}</a>
+				            <a href="/mypage?page=${i}" class="btn btn-secondary ${currentPage == i ? 'active' : ''}">${i + 1}</a>
 				        </c:forEach>
 				        <c:if test="${currentPage < totalPages - 1}">
-				            <a href="/mypages?page=${currentPage + 1}" class="btn btn-secondary">다음</a>
+				            <a href="/mypage?page=${currentPage + 1}" class="btn btn-secondary">다음</a>
 				        </c:if>
 				    </div>
 				</c:if>

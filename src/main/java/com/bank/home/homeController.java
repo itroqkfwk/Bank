@@ -27,11 +27,11 @@ public class homeController {
 		return "signup-page";
 	}
 	
-	@GetMapping("/mypage")
-	public String myPage(Model model) {
-		return "my-page";
-		
-	}
+//	@GetMapping("/mypage")
+//	public String myPage(Model model) {
+//		return "my-page";
+//		
+//	}
 	
 	@GetMapping("/deposit-page")
 	public String depositPage(Model model) {
