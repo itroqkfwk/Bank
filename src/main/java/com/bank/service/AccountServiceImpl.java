@@ -1,27 +1,34 @@
 package com.bank.service;
 
 import com.bank.dto.AccountDTO;
+import com.bank.exception.AccountException;
 import com.bank.mapper.AccountMapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AccountServiceImpl implements AccountService {
-
-    AccountMapper accountMapper;
+	
+	@Autowired
+    private AccountMapper accountMapper;
 
     public AccountServiceImpl(AccountMapper accountMapper) {
         this.accountMapper = accountMapper;
     }
-
+    
+    @Transactional
     @Override
     public List<AccountDTO> getAllAccounts() {
         return accountMapper.selectAllAccounts();
     }
-
+    
+    @Transactional
     @Override
     public AccountDTO getAccountById(int id) {
         return accountMapper.selectAccountById(id);
@@ -44,5 +51,72 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(int id) {
         accountMapper.deleteAccount(id);
     }
+    
+    @Transactional
+	@Override
+	public int checkAccountExists(String accountNo) {
+		return accountMapper.checkAccountExists(accountNo);
+	}
+
+    @Transactional
+    @Override
+    public int existsByAccountNo(String accountNo) {
+        return accountMapper.existsByAccountNo(accountNo);
+    }
+    
+    @Transactional
+    @Override
+    public List<AccountDTO> getAccountsByUserId(int userId, int page, int size) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("userId", userId);
+        params.put("offset", page * size);  
+        params.put("size", size);
+        
+        return accountMapper.selectAccountsByUserId(params);
+    }
+    
+    @Transactional
+    @Override
+    public int getTotalAccountsByUserId(int userId) {
+        return accountMapper.countAccountsByUserId(userId);
+    }
+    
+    @Transactional
+    @Override
+    public int deposit(String accountNo, double amount) {
+        if (amount <= 0) {
+            throw new AccountException("입금 금액은 0보다 커야 합니다.");
+        }
+
+        int updatedRows = accountMapper.deposit(accountNo, amount);
+        if (updatedRows == 0) {
+            throw new AccountException("입금 실패! 계좌번호를 확인해주세요.");
+        }
+        
+        return updatedRows;  
+    }
+
+    @Transactional
+    @Override
+    public int withdraw(String accountNo, double amount) {
+        if (amount <= 0) {
+            throw new AccountException("출금 금액은 0보다 커야 합니다.");
+        }
+
+        AccountDTO account = accountMapper.selectByAccountNo(accountNo);
+        if (account == null) {
+            throw new AccountException("출금 실패! 존재하지 않는 계좌입니다.");
+        }
+        if (account.getMoney() < amount) {
+            throw new AccountException("출금 실패! 잔액이 부족합니다.");
+        }
+
+        int updatedRows = accountMapper.withdraw(accountNo, amount);
+        if (updatedRows == 0) {
+            throw new AccountException("출금 중 오류가 발생했습니다.");
+        }
+        return updatedRows;  
+    }
+
 
 }

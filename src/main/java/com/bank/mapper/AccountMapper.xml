@@ -5,48 +5,67 @@
 <mapper namespace="com.bank.mapper.AccountMapper">
    
 	<select id="selectAllAccounts" resultType="com.bank.dto.AccountDTO">
-        SELECT id, account_name, account_no, money FROM Accounts;
+        SELECT * FROM accounts;
     </select>
 
     <select id="selectAccountById" parameterType="int" resultType="com.bank.dto.AccountDTO">
-        SELECT id, account_name, account_no, money FROM Accounts WHERE id = #{id};
+        SELECT id, account_name, account_no, money FROM accounts WHERE id = #{id};
     </select>
 	
     <insert id="insertAccount" parameterType="com.bank.dto.AccountDTO">
-        INSERT INTO Accounts (account_name, account_no, money)
-        VALUES (#{account_name}, #{account_no}, #{money});
+        INSERT INTO accounts (account_name, account_no, money, user_id)
+        VALUES (#{account_name}, #{account_no}, #{money}, #{user_id});
     </insert>
 
     <update id="updateAccount" parameterType="com.bank.dto.AccountDTO">
-        UPDATE Accounts
+        UPDATE accounts
         SET account_name = #{account_name},
             money = #{money}
         WHERE id = #{id};
     </update>
 
     <delete id="deleteAccount" parameterType="int">
-        DELETE FROM Accounts WHERE id = #{id};
+        DELETE FROM accounts WHERE id = #{id};
     </delete>
-    
-    <insert id="AccounAdd" parameterType="MemberDTO">
-	   insert into member (userid,
-	                       passwd,
-	                       username,
-	                       addess,
-	                       email
-	                       )
-	   values ( #{userid},
-	            #{passwd},
-	            #{username},
-	            #{addess},
-	            #{email}
-	           )
-	   
-	</insert>
 	
-	<delete id="AccountDelete" parameterType="int">
-	    delete from member
-		where userid = #{userid}
-	</delete>
+	<select id="checkAccountExists" resultType="int">
+        SELECT COUNT(*) FROM accounts WHERE account_no = #{account_no}
+    </select>
 	 
+	<select id="existsByAccountNo" resultType="int">
+	    SELECT EXISTS (
+	        SELECT 1 FROM accounts WHERE account_no = #{accountNo}
+	    )
+	</select>
+	
+	<select id="selectAccountsByUserId" parameterType="map" resultType="com.bank.dto.AccountDTO">
+	    SELECT id, account_name, account_no, money
+	    FROM accounts
+	    WHERE user_id = #{userId}
+	    LIMIT #{offset}, #{size}
+	</select>
+
+	<select id="countAccountsByUserId" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM accounts WHERE user_id = #{userId};
+    </select>
+	
+	<update id="deposit">
+	    UPDATE accounts 
+	    SET money = money + #{amount}
+	    WHERE account_no = #{accountNo}
+	</update>
+	
+	<update id="withdraw">
+	    UPDATE accounts 
+	    SET money = money - #{amount}
+	    WHERE account_no = #{accountNo} AND money >= #{amount}
+	</update>
+	
+	<select id="selectByAccountNo" parameterType="string" resultType="com.bank.dto.AccountDTO">
+	    SELECT id, account_name, account_no, money 
+	    FROM accounts 
+	    WHERE account_no = #{accountNo}
+	</select>
+
+
 </mapper>

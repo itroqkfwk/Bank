@@ -15,48 +15,21 @@
 body {
   font-family: Arial, sans-serif;
   height: 100vh;
-  display: flex;
-  align-items: center;
+  background-color: white;
+  display:flex;
   justify-content: center;
-  background-color: #1a365d;
-}
-
-.container {
-  display: flex;
-  max-width: 1200px;
-  min-width: 250px;
-  width: 100%;
-  max-height: 800px;
-  height: 100%;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
 }
 
 .signup-section {
   flex: 1;
-  padding: 10px 40px;
-  margin:20px 0;
+  padding: 2px 40px;
+  margin:2px 0;
   display: flex;
   min-width:45%;
-  
-  width:100%;
+  max-width:1200px;
+  width:80%;
   flex-direction: column;
   justify-content: center;
-  
-  overflow-y:auto;
-}
-
-.image-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.image-section img {
-  border-radius: 20px;
-  max-width: 95%;
 }
 
 h1 {
@@ -143,7 +116,6 @@ button:hover {
  </style>
 </head>
 <body>
-<div class="container">
   <div class="signup-section">
     <h1>회원가입</h1>
     <form action="/auth/register" method="post">
@@ -204,10 +176,6 @@ button:hover {
       <div class="login-link" >회원이신가요? <a href="/login-page">로그인</a> </div>
     </form>
   </div>
-  <div class="image-section">
-    <img src="https://picsum.photos/600/800"  width="600" height="750" />
-  </div>
-</div>
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

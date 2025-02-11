@@ -25,8 +25,7 @@ public class SecurityConfig {
 		
 		//요청맵핑값 허용
 		http.authorizeHttpRequests(auth->
-		                           auth.requestMatchers("/","/").permitAll()  
-//		                               .requestMatchers("/**").permitAll()
+		                           auth.requestMatchers("/","/**").permitAll()  
 		                               .anyRequest()
 		                               .permitAll()
 				                  );

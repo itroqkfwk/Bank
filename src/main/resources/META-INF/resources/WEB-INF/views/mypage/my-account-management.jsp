@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,35 +83,73 @@
             font-size: 24px;
             margin-bottom: 10px;
         }
+        
+		.no-account-message {
+		    background: linear-gradient(135deg, #1a365d 0%, #2c4a7c 100%); /* 어두운 파란색 계열 */
+		    border: 1px solid #e2e8f0; /* 얇은 경계선 */
+		    padding: 10px 10px; /* 여백 */
+		    border-radius: 10px; /* 둥근 모서리 */
+		    text-align: center; /* 텍스트 중앙 정렬 */
+		    margin-top: 20px; /* 위쪽 여백 */
+		    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+		    color: white; /* 글자 색을 흰색으로 */
+		}
+		
+		.no-account-message h3 {
+		    color: white; /* 글자 색을 흰색으로 변경 */
+		    font-size: 24px; /* 큰 글자 크기 */
+		    font-weight: 600; /* 두꺼운 글씨 */
+		    margin: 0; /* 여백 없애기 */
+		    line-height: 1.5; /* 줄 간격 조정 */
+		}
 
         .card {
             background: white;
             border-radius: 10px;
             padding: 25px;
-            margin-bottom: 20px;
+            margin-top: 40px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
-        .account-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
         .account-card {
-            background: linear-gradient(135deg, #1a365d 0%, #2c4a7c 100%);
-            color: white;
+            background: #f8fafc;
+            color: #1a365d;
             padding: 25px;
             border-radius: 15px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .account-number {
             font-size: 18px;
             margin-bottom: 20px;
         }
+        
+	        .pagination {
+			    display: flex;
+			    justify-content: center;
+			    gap: 10px;
+			    margin-top: 20px;
+			}
+			
+			.pagination .btn {
+			    padding: 10px 20px;
+			    background-color: #3182ce;
+			    color: white;
+			    text-decoration: none;
+			    border-radius: 5px;
+			    cursor: pointer;
+			}
+			
+			.pagination .btn.active {
+			    background-color: #2c4a7c; 
+			}
+			
+			.pagination .btn:hover {
+			    opacity: 0.9;
+			    
+			}
 
         .account-balance {
             font-size: 24px;
@@ -230,9 +269,19 @@
                 grid-template-columns: 1fr;
             }
         }
+        
 </style>
 </head>
 <body>
+			<script>
+		        window.onload = function() {
+		            var message = '${message}';  // 전달된 메시지 가져오기
+		            if (message) {
+		                alert(message);  // 메시지를 팝업으로 띄운다
+		            }
+		        }
+		    </script>
+		    
 	        <!-- 메인 콘텐츠 -->
         <div class="main-content">
             <div class="content-header">
@@ -241,80 +290,64 @@
             </div>
 
             <!-- 계좌 요약 -->
-            <div class="account-summary">
-                <div class="account-card">
-                    <div class="account-number">123-456-789012</div>
-                    <div class="account-balance">₩1,500,000</div>
-                    <div>입출금계좌</div>
-                </div>
-            </div>
+				<div class="account-summary">
+				    <c:if test="${not empty accounts}">
+					    <c:forEach var="account" items="${accounts}">
+					        <div class="account-card">
+					            <div class="account-number">${account.account_no}</div>
+					            <div class="account-balance">₩${account.money}</div>
+					            <div>${account.account_name}</div>
+					        </div>
+					    </c:forEach>
+					</c:if>
+					
+					<c:if test="${empty accounts}">
+					    <div class="no-account-message">
+					        <h3>계좌가 없습니다. 계좌를 개설해주세요.</h3>
+					    </div>
+					</c:if>
+				</div>
+				
+				<!-- 페이징 처리 -->
+				<c:if test="${not empty totalPages}">
+				    <div class="pagination">
+				        <c:if test="${currentPage > 0}">
+				            <a href="/mypages?page=${currentPage - 1}" class="btn btn-secondary">이전</a>
+				        </c:if>
+				        <c:forEach var="i" begin="0" end="${totalPages - 1}" step="1">
+				            <a href="/mypages?page=${i}" class="btn btn-secondary ${currentPage == i ? 'active' : ''}">${i + 1}</a>
+				        </c:forEach>
+				        <c:if test="${currentPage < totalPages - 1}">
+				            <a href="/mypages?page=${currentPage + 1}" class="btn btn-secondary">다음</a>
+				        </c:if>
+				    </div>
+				</c:if>
 
-            <!-- 빠른 메뉴 -->
-            <div class="quick-actions">
-                <div class="action-button">
-                    입금내역
-                </div>
-                <div class="action-button">
-                    계좌개설
-                </div>
-            </div>
+			
 
-            <!-- 최근 거래내역 -->
-            <div class="card">
-                <h2 style="margin-bottom: 20px;">최근 거래내역</h2>
-                <ul class="transaction-list">
-                    <li class="transaction-item">
-                        <div class="transaction-info">
-                            <span style="font-weight: 500;">급여</span>
-                            <span style="color: #718096;">2025-02-05</span>
-                        </div>
-                        <span class="transaction-amount deposit">+500,000원</span>
-                    </li>
-                    <li class="transaction-item">
-                        <div class="transaction-info">
-                            <span style="font-weight: 500;">식비</span>
-                            <span style="color: #718096;">2025-02-04</span>
-                        </div>
-                        <span class="transaction-amount withdraw">-150,000원</span>
-                    </li>
-                    <li class="transaction-item">
-                        <div class="transaction-info">
-                            <span style="font-weight: 500;">환불</span>
-                            <span style="color: #718096;">2025-02-03</span>
-                        </div>
-                        <span class="transaction-amount deposit">+100,000원</span>
-                    </li>
-                </ul>
-            </div>
 
-            <!-- 회원정보 -->
-            <div class="card">
-                <h2 style="margin-bottom: 20px;">회원정보</h2>
-                <form>
-                    <div class="form-group">
-                        <label>이름</label>
-                        <input type="text" value="홍길동" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>이메일</label>
-                        <input type="email" value="hong@example.com" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>휴대폰 번호</label>
-                        <input type="tel" value="010-1234-5678" readonly>
-                    </div>
-                </form>
-            </div>
 
-            <!-- 보안 설정 -->
-            <div class="card">
-                <h2 style="margin-bottom: 20px;">보안 설정</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn btn-primary">비밀번호 변경</button>
-<!--                     <button class="btn btn-primary">보안카드 관리</button> -->
-                    <button class="btn btn-danger">회원 탈퇴</button>
-                </div>
-            </div>
-        </div>
+            
+			            <!-- 계좌 개설 폼 -->
+						<div class="card">
+						    <h2 style="margin-bottom: 20px;">계좌 개설</h2>
+						    <form action="/add" method="post">
+						        <div class="form-group">
+						            <label for="account_name">계좌 이름</label>
+						            <input type="text" id="account_name" name="account_name" placeholder="계좌 이름" required>
+						        </div>
+						        <div class="form-group">
+						            <label for="account_no">계좌 번호</label>
+						            <input type="text" id="account_no" name="account_no" placeholder="계좌 번호" required>
+						        </div>
+						        <div class="form-group">
+						            <label for="money">초기 금액</label>
+						            <input type="number" id="money" name="money" placeholder="초기 금액" required>
+						        </div>
+						        <button type="submit" class="btn btn-primary">계좌 개설</button>
+						    </form>
+						</div>
+						</div>
+
 </body>
 </html>

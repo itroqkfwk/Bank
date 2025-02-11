@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bank.mapper.NoticeMapper">
+
+<resultMap id="NoticeResultMap" type="NoticeDTO">
+    <id property="id" column="id"/>
+    <result property="title" column="title"></result>
+    <result property="contents" column="contents"></result>
+    <result property="createdAt" column="created_at"></result>
+    <result property="views" column="views"></result>
+    <association property="admin" javaType="AdminDTO">
+        <result property="username" column="username"/>
+    </association>
+</resultMap>
+	
+<!-- 공지사항 목록 조회(페이징) -->	
+<select id="getNotices" parameterType="string" resultMap="NoticeResultMap">
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') as created_at, n.views,
+           u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    ORDER BY n.id DESC
+</select>
+
+<!-- 공지사항 상세 페이지 | 이전, 현재, 이후 게시글 정보 조회 -->
+<select id="getNoticeById" parameterType="long" resultMap="NoticeResultMap">
+(
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') AS created_at, 
+           n.views, u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    WHERE n.id &lt; #{id}
+    ORDER BY n.id DESC
+    LIMIT 1
+) 
+UNION ALL
+(
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') AS created_at, 
+           n.views, u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    WHERE n.id = #{id}
+) 
+UNION ALL
+(
+    SELECT n.id, n.title, n.contents, DATE_FORMAT(n.created_at, '%Y.%m.%d %H:%i:%S') AS created_at, 
+           n.views, u.id AS userid, u.username
+    FROM notices n
+    JOIN users u ON n.user_id = u.id
+    WHERE n.id > #{id}
+    ORDER BY n.id ASC
+    LIMIT 1
+);
+
+</select>
+
+
+<!-- 공지사항 전체 개수 -->
+<select id="getNoticeCount" resultType="int">
+    SELECT COUNT(*) FROM notices 
+</select>
+
+<!-- 공지사항 추가 -->
+<insert id="addNotice">
+	INSERT INTO notices(title, contents, user_id, views)
+	VALUES(#{title}, #{contents}, #{userId}, 0)
+</insert>
+
+<!-- 공지사항 수정 -->
+<update id="updateNotice" parameterType="RequestNoticeDTO">
+	UPDATE notices 
+	SET title = #{title}, contents = #{contents}
+	WHERE user_id = #{userId} AND id = #{id}
+</update>
+
+
+
+<!-- 공지사항 삭제 -->
+<delete id="deleteById" parameterType="long">
+	DELETE FROM notices n WHERE n.id=#{id}
+</delete>
+
+<!-- 공지사항 조회카운트 수정 -->
+<update id="updateViews" parameterType="NoticeViewsDTO">
+	UPDATE notices 
+	SET views = #{views}
+	WHERE id = #{id}
+</update>
+
+<!-- 공지사항 조회카운트 조회 -->
+<select id="getViews" parameterType="long" resultType="int">
+	SELECT views from notices
+	WHERE id = #{id}
+</select>
+	
+</mapper>

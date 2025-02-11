@@ -96,7 +96,7 @@
 
             <div class="form-group">
                 <label for="receiverBank">입금 은행</label>
-                <input type="text" id="receiverBank" placeholder="" required>
+                <input type="text" id="receiverBank" placeholder="입금 은행을 입력해주세요." required>
             </div>
 
             <div class="form-group">
