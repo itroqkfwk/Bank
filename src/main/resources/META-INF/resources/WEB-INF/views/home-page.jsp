@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BS Bank</title>
+<title>SBank</title>
 </head>
 <body>
 	<jsp:include page="common/header.jsp" flush="true"/><br>

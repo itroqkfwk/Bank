@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SBank | 회원가입</title>
+<title></title>
 <style type="text/css">
 * {
   margin: 0;
@@ -14,7 +14,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  height: 100vh;
+  height: auto;
   background-color: white;
   display:flex;
   justify-content: center;
