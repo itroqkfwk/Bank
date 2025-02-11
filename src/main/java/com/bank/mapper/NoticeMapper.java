@@ -23,5 +23,4 @@ public interface NoticeMapper {
 	public int updateNotice(RequestNoticeDTO requestNoticeDTO);
 	public int updateViews(NoticeViewsDTO noticeViewsDTO);
 	public int getViews(Long id);
-	
 }
