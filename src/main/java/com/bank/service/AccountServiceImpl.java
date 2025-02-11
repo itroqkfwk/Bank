@@ -1,6 +1,7 @@
 package com.bank.service;
 
 import com.bank.dto.AccountDTO;
+import com.bank.exception.AccountException;
 import com.bank.mapper.AccountMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,20 +54,15 @@ public class AccountServiceImpl implements AccountService {
     
     @Transactional
 	@Override
-	public boolean checkAccountExists(String accountNo) {
-		return accountMapper.checkAccountExists(accountNo) > 0;
+	public int checkAccountExists(String accountNo) {
+		return accountMapper.checkAccountExists(accountNo);
 	}
 
     @Transactional
-	@Override
-	public boolean existsByAccountNo(String accountNo) {
-		try {
-            return accountMapper.existsByAccountNo(accountNo); 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-	}
+    @Override
+    public int existsByAccountNo(String accountNo) {
+        return accountMapper.existsByAccountNo(accountNo);
+    }
     
     @Transactional
     @Override
@@ -84,5 +80,43 @@ public class AccountServiceImpl implements AccountService {
     public int getTotalAccountsByUserId(int userId) {
         return accountMapper.countAccountsByUserId(userId);
     }
+    
+    @Transactional
+    @Override
+    public int deposit(String accountNo, double amount) {
+        if (amount <= 0) {
+            throw new AccountException("입금 금액은 0보다 커야 합니다.");
+        }
+
+        int updatedRows = accountMapper.deposit(accountNo, amount);
+        if (updatedRows == 0) {
+            throw new AccountException("입금 실패! 계좌번호를 확인해주세요.");
+        }
+        
+        return updatedRows;  
+    }
+
+    @Transactional
+    @Override
+    public int withdraw(String accountNo, double amount) {
+        if (amount <= 0) {
+            throw new AccountException("출금 금액은 0보다 커야 합니다.");
+        }
+
+        AccountDTO account = accountMapper.selectByAccountNo(accountNo);
+        if (account == null) {
+            throw new AccountException("출금 실패! 존재하지 않는 계좌입니다.");
+        }
+        if (account.getMoney() < amount) {
+            throw new AccountException("출금 실패! 잔액이 부족합니다.");
+        }
+
+        int updatedRows = accountMapper.withdraw(accountNo, amount);
+        if (updatedRows == 0) {
+            throw new AccountException("출금 중 오류가 발생했습니다.");
+        }
+        return updatedRows;  
+    }
+
 
 }

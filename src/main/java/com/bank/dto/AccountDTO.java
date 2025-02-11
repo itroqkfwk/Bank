@@ -10,13 +10,13 @@ public class AccountDTO {
 	
 	public AccountDTO() {}
 
-	public AccountDTO(int id, String account_name, String account_no, double money, int foreign_user_id) {
+	public AccountDTO(int id, String account_name, String account_no, double money, int user_id) {
 		super();
 		this.id = id;
 		this.account_name = account_name;
 		this.account_no = account_no;
 		this.money = money;
-		this.user_id = foreign_user_id;
+		this.user_id = user_id;
 	}
 
 	public AccountDTO(String account_name, String account_no, double money, int user_id) {
@@ -62,18 +62,18 @@ public class AccountDTO {
 		this.money = money;
 	}
 
-	public int getForeign_user_id() {
+	public int getUser_id() {
 		return user_id;
 	}
 
-	public void setForeign_user_id(int user_id) {
+	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
 
 	@Override
 	public String toString() {
 		return "AccountDTO [id=" + id + ", account_name=" + account_name + ", account_no=" + account_no + ", money="
-				+ money + ", foreign_user_id=" + user_id + "]";
+				+ money + ", user_id=" + user_id + "]";
 	}
 	
 	

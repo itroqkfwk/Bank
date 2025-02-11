@@ -290,36 +290,39 @@
             </div>
 
             <!-- 계좌 요약 -->
-            <div class="account-summary">
-			    <c:if test="${empty accounts}">
-			        <div class="no-account-message">
-			            <h3>계좌가 없습니다. 계좌를 개설해주세요.</h3>
-			        </div>
-			    </c:if>
-			    <c:if test="${not empty accounts}">
-			        <c:forEach var="account" items="${accounts}">
-			            <div class="account-card">
-			                <div class="account-number">${account.account_no}</div>
-			                <div class="account-balance">₩${account.money}</div>
-			                <div>${account.account_name}</div>
-			            </div>
-			        </c:forEach>
-			    </c:if>
-			</div>
-			
-			<div class="pagination">
-			    <c:if test="${currentPage > 0}">
-			        <a href="/mypage?page=${currentPage - 1}" class="btn btn-secondary">이전</a>
-			    </c:if>
-			    <c:if test="${totalPages > 0}">
-				    <c:forEach var="i" begin="0" end="${totalPages - 1}" step="1">
-				        <a href="/mypage?page=${i}" class="btn btn-secondary ${currentPage == i ? 'active' : ''}">${i + 1}</a>
-				    </c:forEach>
+				<div class="account-summary">
+				    <c:if test="${not empty accounts}">
+					    <c:forEach var="account" items="${accounts}">
+					        <div class="account-card">
+					            <div class="account-number">${account.account_no}</div>
+					            <div class="account-balance">₩${account.money}</div>
+					            <div>${account.account_name}</div>
+					        </div>
+					    </c:forEach>
+					</c:if>
+					
+					<c:if test="${empty accounts}">
+					    <div class="no-account-message">
+					        <h3>계좌가 없습니다. 계좌를 개설해주세요.</h3>
+					    </div>
+					</c:if>
+				</div>
+				
+				<!-- 페이징 처리 -->
+				<c:if test="${not empty totalPages}">
+				    <div class="pagination">
+				        <c:if test="${currentPage > 0}">
+				            <a href="/mypages?page=${currentPage - 1}" class="btn btn-secondary">이전</a>
+				        </c:if>
+				        <c:forEach var="i" begin="0" end="${totalPages - 1}" step="1">
+				            <a href="/mypages?page=${i}" class="btn btn-secondary ${currentPage == i ? 'active' : ''}">${i + 1}</a>
+				        </c:forEach>
+				        <c:if test="${currentPage < totalPages - 1}">
+				            <a href="/mypages?page=${currentPage + 1}" class="btn btn-secondary">다음</a>
+				        </c:if>
+				    </div>
 				</c:if>
-			    <c:if test="${currentPage < totalPages - 1}">
-			        <a href="/mypage?page=${currentPage + 1}" class="btn btn-secondary">다음</a>
-			    </c:if>
-			</div>
+
 			
 
 
