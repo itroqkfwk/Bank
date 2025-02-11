@@ -88,36 +88,33 @@
             display: none;
         }
 </style>
-<body>    <div class="container">
-        <h1>출금하기</h1>
-        <form id="transferForm">
+<body>
+    <div class="container">
+	    <h1>출금하기</h1>
+	    <form action="/withdraw" method="post" id="transferForm">
+	
+	        <div class="form-group">
+	            <label for="withdrawalAccount">출금 계좌</label>
+	            <input type="text" id="withdrawalAccount" name="account_no" placeholder="출금할 계좌번호를 입력하세요" required>
+	            <div class="error" id="withdrawalAccountError"></div>
+	        </div>
+	
+	        <div class="form-group">
+	            <label for="amount">금액</label>
+	            <input type="number" id="amount" name="amount" placeholder="출금할 금액을 입력하세요" required min="1">
+	            <div class="error" id="amountError"></div>
+	        </div>
+	
+	        <div class="form-group">
+	            <label for="description">메모</label>
+	            <input type="text" id="description" name="description" placeholder="메모를 입력하세요" maxlength="20">
+	        </div>
+	
+	        <button type="submit">출금하기</button>
+	        <div class="back-link"><a href="/">돌아가기</a></div>
+	    </form>
+	</div>
 
-            <div class="form-group">
-                <label for="withdrawalBank">출금 은행</label>
-                <input type="text" id="withdrawalBank" placeholder="출금 은행" required>
-            </div>
-
-            <div class="form-group">
-                <label for="withdrawalAccount">출금 계좌</label>
-                <input type="text" id="withdrawalAccount" placeholder="출금할 계좌번호를 입력하세요" required>
-                <div class="error" id="withdrawalAccountError"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="amount">금액</label>
-                <input type="number" id="amount" placeholder="출금할 금액을 입력하세요" required min="1">
-                <div class="error" id="amountError"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="description">메모</label>
-                <input type="text" id="description" placeholder="메모를 입력하세요" maxlength="20">
-            </div>
-            <input type="text" value="출금" style="display:none">
-            <button type="submit">출금하기</button>
-            <div class="back-link"><a href="/">돌아가기</a></div>
-        </form>
-    </div>
 
 
 </body>

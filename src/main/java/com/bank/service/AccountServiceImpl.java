@@ -1,8 +1,10 @@
 package com.bank.service;
 
 import com.bank.dto.AccountDTO;
+import com.bank.dto.TransactionDTO;
 import com.bank.exception.AccountException;
 import com.bank.mapper.AccountMapper;
+import com.bank.mapper.TransactionMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Autowired
     private AccountMapper accountMapper;
+	
+	@Autowired
+    private TransactionMapper transactionMapper;
+	
 
     public AccountServiceImpl(AccountMapper accountMapper) {
         this.accountMapper = accountMapper;
@@ -88,11 +94,21 @@ public class AccountServiceImpl implements AccountService {
             throw new AccountException("입금 금액은 0보다 커야 합니다.");
         }
 
+        AccountDTO account = accountMapper.selectByAccountNo(accountNo);  // 계좌 정보 조회
+        if (account == null) {
+            throw new AccountException("입금 실패! 존재하지 않는 계좌입니다.");
+        }
+
         int updatedRows = accountMapper.deposit(accountNo, amount);
         if (updatedRows == 0) {
             throw new AccountException("입금 실패! 계좌번호를 확인해주세요.");
         }
-        
+
+        if (account != null) {
+            TransactionDTO transaction = new TransactionDTO((long) amount, "입금", (long) account.getId(), "DEPOSIT");
+            transactionMapper.insertTransaction(transaction);  // 트랜잭션 추가
+        }
+
         return updatedRows;  
     }
 
@@ -115,8 +131,24 @@ public class AccountServiceImpl implements AccountService {
         if (updatedRows == 0) {
             throw new AccountException("출금 중 오류가 발생했습니다.");
         }
+        
+        TransactionDTO transaction = new TransactionDTO((long) amount, "출금", (long) account.getId(), "WITHDRAW");
+        transactionMapper.insertTransaction(transaction);
+
         return updatedRows;  
     }
+    
+    
+
+    @Transactional
+    public void addTransaction(TransactionDTO transaction) {
+        transactionMapper.insertTransaction(transaction);
+    }
+
+    public List<TransactionDTO> getTransactionsByAccountId(Long accountId) {
+        return transactionMapper.getTransactionsByAccountId(accountId);
+    }
+    
 
 
 }

@@ -90,36 +90,31 @@
 
 </style>
 <body>
-    <div class="container">
-        <h1>입금하기</h1>
-        <form id="transferForm" onsubmit="return validateForm(event)">
+		<div class="container">
+		    <h1>입금하기</h1>
+		    <form action="/deposit" method="post" id="transferForm" onsubmit="return validateForm(event)">
+		        <div class="form-group">
+		            <label for="receiverAccount">입금 계좌</label>
+		            <input type="text" id="receiverAccount" name="account_no" placeholder="입금할 계좌번호를 입력하세요" required>
+		            <div class="error" id="receiverAccountError"></div>
+		        </div>
+		
+		        <div class="form-group">
+		            <label for="amount">금액</label>
+		            <input type="number" id="amount" name="amount" placeholder="입금할 금액을 입력하세요" required min="1">
+		            <div class="error" id="amountError"></div>
+		        </div>
+		
+		        <div class="form-group">
+		            <label for="description">메모</label>
+		            <input type="text" id="description" name="description" placeholder="메모를 입력하세요" maxlength="20">
+		        </div>
+		
+		        <button type="submit">입금하기</button>
+		        <div class="back-link"><a href="/">돌아가기</a></div>
+		    </form>
+		</div>
 
-            <div class="form-group">
-                <label for="receiverBank">입금 은행</label>
-                <input type="text" id="receiverBank" placeholder="입금 은행을 입력해주세요." required>
-            </div>
-
-            <div class="form-group">
-                <label for="receiverAccount">입금 계좌</label>
-                <input type="text" id="receiverAccount" placeholder="입금할 계좌번호를 입력하세요" required>
-                <div class="error" id="receiverAccountError"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="amount">금액</label>
-                <input type="number" id="amount" placeholder="입금할 금액을 입력하세요" required min="1">
-                <div class="error" id="amountError"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="description">메모</label>
-                <input type="text" id="description" placeholder="메모를 입력하세요" maxlength="20">
-            </div>
-            <input type="text" value="입금" style="display:none">
-            <button type="submit">입금하기</button>
-             <div class="back-link"><a href="/">돌아가기</a></div>
-        </form>
-    </div>
 
 </body>
 </html>
