@@ -27,7 +27,7 @@ body {
   max-width: 1200px;
   min-width: 250px;
   width: 100%;
-  max-height: 800px;
+  max-height: 600px;
   height: 100%;
   background: white;
   border-radius: 20px;
@@ -116,6 +116,22 @@ button:hover {
   }
 }
 
+.home-link-group{
+	
+	width:30px;
+	height:30px;
+	margin:0 auto;
+
+}
+
+.home-link-group a{
+transition:0.5s;
+}
+
+.home-link-group a:hover{
+	color:#007BFF;
+}
+
 
  </style>
 </head>
@@ -140,9 +156,16 @@ button:hover {
       <p>SBank의 회원이 아니신가요? </p>
       <a href="/signup-page">회원가입</a>
     </div>
+    <div class="home-link-group">
+      <a href="/" title="홈으로 가기">
+      	<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+		  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+		</svg>
+      </a>
+    </div>
   </div>
   <div class="image-section">
-    <img src="https://picsum.photos/600/800"  width="600" height="750" />
+    <img src="https://picsum.photos/600/800"  width="600" height="570" />
   </div>
 </div>
 </body>

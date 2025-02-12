@@ -51,13 +51,24 @@
 }
 
 .card:hover{
- 
  box-shadow:0 0 30px 0 #1a365d;
  color:white;
 }
 
+.card svg {
+	transition:0.5s;
+	color:#1a365d;
+}
+.card svg:hover{
+	color:#007BFF;
+}
+
 .card-group .card p {
+  
   font-size: 1.35rem;
+  a {
+  	color:#1a365d;
+  }
 }
 
 @media (max-width: 1020px) {

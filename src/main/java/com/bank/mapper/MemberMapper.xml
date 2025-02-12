@@ -15,6 +15,13 @@
 	   insert into Users (userid, password, username, email, address, roles)
 	   values ( #{userid}, #{password}, #{username}, #{email}, #{address}, #{roles})
 	</insert>
+	
+	<update id="memberUpdate" parameterType="MemberDTO">
+		update Users set address=#{address}, username=#{username}
+		where userid = #{userid} 
+		
+	</update>
+	
 	 
 	 
 	<select id="login" parameterType="hashmap" resultType="MemberDTO">
@@ -32,7 +39,7 @@
 	 
 	  
 	 <select id="findByUserid" resultType="MemberDTO" parameterType="string">
-	     select userid, password, username
+	     select id, userid, password, username, email, address, roles
 	     from Users
 	     where userid=#{userid}
 	 </select>

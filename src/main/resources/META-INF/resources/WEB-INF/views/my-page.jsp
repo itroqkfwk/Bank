@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -191,13 +192,26 @@
        	}
 </style>
 <body>
+<%
+	String userid =  (String) session.getAttribute("userid");
+%>
 <div class="container">
 	        <!-- 사이드바 -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <div class="profile-image"></div>
-                <h2>홍길동님</h2>
-                <p>일반회원</p>
+                <c:if test="${empty userid }">
+                	<h2>방문자님</h2>
+                </c:if>
+                <c:if test="${not empty userid }">
+                	<h2>${userInfo.username}님</h2>
+                </c:if>
+                <c:if test="${not empty userid }">
+                	<p>일반회원</p>
+                </c:if>
+                <c:if test="${empty userid }">
+                	<p>비회원</p>
+                </c:if>
             </div>
             <div class="sidebar-body">
             <ul class="menu-items">

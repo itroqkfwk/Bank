@@ -111,7 +111,7 @@ button:hover {
 }
  .login-link{
  	text-align:center;
- 	margin-top:2rem;
+ 	margin:1.15rem;
  }
  </style>
 </head>
@@ -147,10 +147,10 @@ button:hover {
       </div>
       <div class="input-group">
       	<input name="address1" type="text" id="sample6_postcode" placeholder="우편번호">
-		<input name="address2" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input name="address3" type="text" id="sample6_address" placeholder="주소"><br>
-		<input name="address4" type="text" id="sample6_detailAddress" placeholder="상세주소">
-		<input name="address5" type="text" id="sample6_extraAddress" placeholder="참고항목">
+		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+		<input name="address2" type="text" id="sample6_address" placeholder="주소"><br>
+		<input name="address3" type="text" id="sample6_detailAddress" placeholder="상세주소">
+		<input name="address4" type="text" id="sample6_extraAddress" placeholder="참고항목">
       </div>
 
       <div class="terms">
@@ -173,7 +173,7 @@ button:hover {
       </div>
 
       <button type="submit">가입하기</button>
-      <div class="login-link" >회원이신가요? <a href="/login-page">로그인</a> </div>
+      <div class="login-link" >회원이신가요? <a href="/login-page">로그인 하기</a> </div>
     </form>
   </div>
 </body>

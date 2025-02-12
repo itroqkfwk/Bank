@@ -43,4 +43,9 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.findByUserid(userid);
 	}
 
+	@Override
+	public int memberUpdate(MemberDTO dto) {
+		return mapper.memberUpdate(dto);
+	}
+
 }

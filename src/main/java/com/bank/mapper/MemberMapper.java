@@ -17,6 +17,7 @@ public interface MemberMapper {
 	public MemberDTO login(Map<String, String> map);
 	public MemberDTO mypage(String userid);
 	public MemberDTO findByUserid(String userid);
+	public int memberUpdate(MemberDTO memberDTO);
 //	public MemberDTO authenticate(Map<String, String> map);
 	
 }

@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SBank | 수정하기</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<jsp:include page="notice/notice-update-form.jsp" flush="true"/>
+
 </body>
 </html>
