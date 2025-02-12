@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bank.dto.MemberDTO;
 import com.bank.mapper.MemberMapper;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -37,5 +38,9 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.mypage(userid);
 	}
 
+	@Override
+	public MemberDTO findByUserid(String userid) {
+		return mapper.findByUserid(userid);
+	}
 
 }

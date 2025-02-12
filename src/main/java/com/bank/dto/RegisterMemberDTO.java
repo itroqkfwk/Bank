@@ -1,10 +1,6 @@
 package com.bank.dto;
 
-import org.apache.ibatis.type.Alias;
-
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,16 +11,18 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Alias("MemberDTO")
-@Builder
-public class MemberDTO {
+public class RegisterMemberDTO {
 	
 //	@NotBlank(message = "userid 필수")
 	private String userid;
 	private String username;
 	private String password;
-	private String email;
-	private String address;
-	private String roles;
+	String email;
+	String address1;
+	String address2;
+	String address3;
+	String address4;
+	String address5;
+	String roles;
 
 }

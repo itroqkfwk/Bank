@@ -12,18 +12,16 @@
 	</select>
 	
 	<insert id="memberAdd" parameterType="MemberDTO">
-	   insert into member (userid, password, email, address, roles)
-	   values ( #{userid}, #{password}, #{email}, #{address}, #{roles} )
-	   
+	   insert into Users (userid, password, username, email, address, roles)
+	   values ( #{userid}, #{password}, #{username}, #{email}, #{address}, #{roles})
 	</insert>
 	 
 	 
 	<select id="login" parameterType="hashmap" resultType="MemberDTO">
-	   select userid
+	   select userid, passwd
 	   from Users
 	   where userid = #{userid} and password = #{password}
 	</select>
-	 
 	 
 	 
 	 <select id="mypage" parameterType="string" resultType="MemberDTO">

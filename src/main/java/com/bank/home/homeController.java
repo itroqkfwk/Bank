@@ -17,6 +17,8 @@ public class homeController {
 		return "home-page";
 	}
 	
+
+
 	@GetMapping("/login-page")
 	public String loginPage(Model model) {
 		return "login-page";
@@ -27,11 +29,8 @@ public class homeController {
 		return "signup-page";
 	}
 	
-//	@GetMapping("/mypage")
-//	public String myPage(Model model) {
-//		return "my-page";
-//		
-//	}
+
+
 	
 	@GetMapping("/deposit-page")
 	public String depositPage(Model model) {
@@ -42,6 +41,7 @@ public class homeController {
 	public String withdrawalPage(Model model) {
 		return "withdrawal-page";
 	}	
+
 	
 	
 }
