@@ -9,27 +9,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor
 public class homeController {
 	
 	@GetMapping("/")
 	public String homePage(Model model) {
 		return "home-page";
 	}
-	
-
-
-	@GetMapping("/login-page")
-	public String loginPage(Model model) {
-		return "login-page";
-	}
-	
-	@GetMapping("/signup-page")
-	public String signupPage(Model model) {
-		return "signup-page";
-	}
-	
-
 
 	
 	@GetMapping("/deposit-page")
@@ -41,7 +26,4 @@ public class homeController {
 	public String withdrawalPage(Model model) {
 		return "withdrawal-page";
 	}	
-
-	
-	
 }
