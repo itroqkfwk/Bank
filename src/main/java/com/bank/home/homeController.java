@@ -17,31 +17,31 @@ public class homeController {
 		return "home-page";
 	}
 	
-	@GetMapping("/login-page")
-	public String loginPage(Model model) {
-		return "login-page";
-	}
-	
-	@GetMapping("/signup-page")
-	public String signupPage(Model model) {
-		return "signup-page";
-	}
-	
-	@GetMapping("/mypage")
-	public String myPage(Model model) {
-		return "my-page";
-		
-	}
-	
-	@GetMapping("/deposit-page")
-	public String depositPage(Model model) {
-		return "deposit-page";
-	}	
-	
-	@GetMapping("/withdrawal-page")
-	public String withdrawalPage(Model model) {
-		return "withdrawal-page";
-	}	
+//	@GetMapping("/login-page")
+//	public String loginPage(Model model) {
+//		return "login-page";
+//	}
+//	
+//	@GetMapping("/signup-page")
+//	public String signupPage(Model model) {
+//		return "signup-page";
+//	}
+//	
+//	@GetMapping("/mypage")
+//	public String myPage(Model model) {
+//		return "my-page";
+//		
+//	}
+//	
+//	@GetMapping("/deposit-page")
+//	public String depositPage(Model model) {
+//		return "deposit-page";
+//	}	
+//	
+//	@GetMapping("/withdrawal-page")
+//	public String withdrawalPage(Model model) {
+//		return "withdrawal-page";
+//	}	
 	
 	
 }

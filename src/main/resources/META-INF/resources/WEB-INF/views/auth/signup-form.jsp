@@ -118,7 +118,7 @@ button:hover {
 <body>
   <div class="signup-section">
     <h1>회원가입</h1>
-    <form action="/auth/register" method="post">
+    <form action="/signup-page" method="post">
       <div class="input-group">
         <label>아이디</label>
         <input name="userid" type="text" required>
@@ -127,30 +127,30 @@ button:hover {
 
       <div class="input-group">
         <label>비밀번호</label>
-        <input type="password" required>
+        <input name="password" type="password" required>
         <div class="requirements">영문, 숫자, 특수문자 조합 8-20자</div>
       </div>
 
       <div class="input-group">
         <label>비밀번호 확인</label>
-        <input type="password" required>
+        <input  type="password" required>
       </div>
 
       <div class="input-group">
         <label>이름</label>
-        <input type="text" required>
+        <input name="username" type="text" required>
       </div>
 
       <div class="input-group">
         <label>이메일</label>
-        <input type="email" required>
+        <input name="email" type="email" required>
       </div>
       <div class="input-group">
-      	<input type="text" id="sample6_postcode" placeholder="우편번호">
-		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" id="sample6_address" placeholder="주소"><br>
-		<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-		<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+      	<input name="address1" type="text" id="sample6_postcode" placeholder="우편번호">
+		<input name="address2" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+		<input name="address3" type="text" id="sample6_address" placeholder="주소"><br>
+		<input name="address4" type="text" id="sample6_detailAddress" placeholder="상세주소">
+		<input name="address5" type="text" id="sample6_extraAddress" placeholder="참고항목">
       </div>
 
       <div class="terms">
