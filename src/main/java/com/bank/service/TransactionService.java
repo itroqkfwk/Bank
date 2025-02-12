@@ -10,7 +10,7 @@ import com.bank.dto.TransactionDTO;
 public interface TransactionService {
 	
 	public void addTransaction(TransactionDTO transaction);
-	public List<TransactionDTO> getTransactionsByAccountId(@Param("accountid") Long accountId);
+	public List<TransactionDTO> getTransactionsByAccountId(@Param("accountid") Long account_id);
 
     
 }

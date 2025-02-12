@@ -23,7 +23,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionDTO> getTransactionsByAccountId(Long accountId) {
-        return transactionMapper.getTransactionsByAccountId(accountId);
+    public List<TransactionDTO> getTransactionsByAccountId(Long account_id) {
+        return transactionMapper.getTransactionsByAccountId(account_id);
     }
 }

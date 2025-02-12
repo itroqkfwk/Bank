@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -231,8 +235,8 @@
 		            <!-- 거래내역이 있을 경우 출력 -->
 		            <c:forEach var="transaction" items="${transactions}">
 					    <tr>
-					        <td>${transaction.created_at}</td>  
-					        <td>${transaction.transaction_type}</td>  
+					        <td>${transaction.created_at}</td>
+					        <td>${transaction.transaction_type}</td>
 					        <td>${transaction.description}</td>
 					        <td>
 					            <c:choose>

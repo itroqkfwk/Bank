@@ -15,7 +15,7 @@ import com.bank.dto.TransactionDTO;
 @Mapper
 public interface TransactionMapper {
 	
-    List<TransactionDTO> getTransactionsByAccountId(@Param("accountId") Long accountId);
+    List<TransactionDTO> getTransactionsByAccountId(@Param("accountId") Long account_id);
 
     void insertTransaction(TransactionDTO transaction);
 }

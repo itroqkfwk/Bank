@@ -66,4 +66,10 @@ public class TransactionDTO {
     public void setCreated_at(Timestamp created_at) {
         this.created_at = created_at;
     }
+    
+    @Override
+    public String toString() {
+        return "TransactionDTO{id=" + id + ", account_id=" + account_id + ", transaction_type='" + transaction_type + '\'' + ", description='" + description + '\'' + ", cost=" + cost + ", created_at=" + created_at + '}';
+    }
+    
 }
