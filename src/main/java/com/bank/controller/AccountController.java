@@ -1,6 +1,7 @@
 package com.bank.controller;
 
 import com.bank.service.AccountService;
+import com.bank.service.TransactionService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import com.bank.dto.AccountDTO;
+import com.bank.dto.TransactionDTO;
 import com.bank.exception.AccountException;
 
 @Slf4j
@@ -32,19 +34,15 @@ public class AccountController {
 
     private final AccountService accountService;
     
+    private final TransactionService transactionService;
+    
     @Autowired
     private HttpSession session;
     
-    @GetMapping("/mypagess")
-    public String showMypage(@ModelAttribute("accounts") List<AccountDTO> accounts, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("accounts", accounts);
-        return "redirect:/mypage"; 
-    }
-    
-    @GetMapping("/mypages")
+    @GetMapping("/mypage")
     public String accountPage(@RequestParam(defaultValue = "0") int page, 
                               @RequestParam(defaultValue = "5") int size,
-                              RedirectAttributes redirectAttributes) {
+                              Model model) {
     	
         session.setAttribute("user_id", 1);  // 여기서 1은 테스트용 user_id
     	Integer user_id = (Integer) session.getAttribute("user_id");
@@ -53,17 +51,17 @@ public class AccountController {
             int offset = page * size;
             List<AccountDTO> accounts = accountService.getAccountsByUserId(user_id, offset, size);
 
-            redirectAttributes.addFlashAttribute("accounts", accounts);
+            model.addAttribute("accounts", accounts);
             
             int totalAccounts = accountService.getTotalAccountsByUserId(user_id);
             int totalPages = (int) Math.ceil((double) totalAccounts / size);
             
-            redirectAttributes.addFlashAttribute("totalPages", totalPages);
-            redirectAttributes.addFlashAttribute("currentPage", page);
+            model.addAttribute("totalPages", totalPages);
+            model.addAttribute("currentPage", page);
         } else {
-            redirectAttributes.addFlashAttribute("message", "로그인 후 이용해 주세요.");
+            model.addAttribute("message", "로그인 후 이용해 주세요.");
         }
-        return "redirect:/mypage";
+        return "my-page";
     }
 
 
@@ -112,35 +110,57 @@ public class AccountController {
     @PostMapping("/deposit")
     public String deposit(@RequestParam String account_no, 
                           @RequestParam double amount,
+                          @RequestParam(required = false) String description,
                           RedirectAttributes redirectAttributes) {
         try {
-        	log.info("account:{}, amount:{}", account_no,amount);
-//            accountService.deposit(account_no, amount);
+            accountService.deposit(account_no, amount);
+            log.info("입금 성공 - 계좌: {}, 금액: {}, 메모: {}", account_no, amount, description);
             redirectAttributes.addFlashAttribute("message", "입금 성공!");
         } catch (AccountException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", "알 수 없는 오류 발생. 다시 시도해주세요.");
         }
-
+        
         return "redirect:/mypage";
     }
 
     @PostMapping("/withdraw")
     public String withdraw(@RequestParam String account_no, 
                            @RequestParam double amount,
+                           @RequestParam(required = false) String description,
                            RedirectAttributes redirectAttributes) {
         try {
             accountService.withdraw(account_no, amount);
+            log.info("출금 성공 - 계좌: {}, 금액: {}, 메모: {}", account_no, amount, description);
             redirectAttributes.addFlashAttribute("message", "출금 성공!");
         } catch (AccountException e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", "알 수 없는 오류 발생. 다시 시도해주세요.");
         }
-
+        
         return "redirect:/mypage";
     }
+    
+    
+    @GetMapping("/transactions")
+    public String getTransactionHistory(@RequestParam("accountId") Long account_id, Model model) {
+    	if (account_id == null) {
+            log.error("accountId가 전달되지 않았습니다.");
+            model.addAttribute("message", "잘못된 요청입니다. 계좌를 선택해주세요.");
+            return "my-page";
+        }
+
+        log.info("Account ID: {}", account_id);
+
+        List<TransactionDTO> transactions = transactionService.getTransactionsByAccountId(account_id);
+        log.info("조회된 거래 내역: {}", transactions);  
+
+        model.addAttribute("transactions", transactions);
+        return "my-page"; 
+    }
+    
     
     
 }

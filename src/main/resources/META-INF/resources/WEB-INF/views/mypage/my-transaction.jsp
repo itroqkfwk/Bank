@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -207,58 +211,49 @@
 		    </script>
 
         <!-- 메인 콘텐츠 -->
-        <div class="main-content">
-            <div class="content-header">
-                <h1>거래내역</h1>
-                <p>계좌의 입출금 및 이체 내역을 조회할 수 있습니다.</p>
-            </div>
-
-            <div class="card">
-                <div class="filter-options">
-                    <button class="filter-button active">전체</button>
-                    <button class="filter-button">입금</button>
-                    <button class="filter-button">출금</button>
-                    <button class="filter-button">최근 순</button>
-                    <button class="filter-button">오래된 순</button>
-                </div>
-
-                <table class="transaction-table">
-                    <thead>
-                        <tr>
-                            <th>거래일시</th>
-                            <th>거래구분</th>
-                            <th>거래내용</th>
-                            <th>거래금액</th>
-                            <th>잔액</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="transaction-date">2025.02.05 14:30</td>
-                            <td><span class="transaction-badge badge-deposit">입금</span></td>
-                            <td>급여</td>
-                            <td class="transaction-amount deposit">+500,000원</td>
-                            <td>1,500,000원</td>
-                        </tr>
-                        <tr>
-                            <td class="transaction-date">2025.02.04 12:15</td>
-                            <td><span class="transaction-badge badge-withdraw">출금</span></td>
-                            <td>식비</td>
-                            <td class="transaction-amount withdraw">-150,000원</td>
-                            <td>1,000,000원</td>
-                        </tr>
-                        <tr>
-                            <td class="transaction-date">2025.02.02 09:20</td>
-                            <td><span class="transaction-badge badge-deposit">입금</span></td>
-                            <td>환불</td>
-                            <td class="transaction-amount deposit">+100,000원</td>
-                            <td>1,450,000원</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-</body>
+		<div class="main-content">
+		    <div class="content-header">
+		        <h1>거래내역</h1>
+		        <p>계좌의 입출금 및 이체 내역을 조회할 수 있습니다.</p>
+		    </div>
+		
+		    <table class="transaction-table">
+		        <thead>
+		            <tr>
+		                <th>거래일시</th>
+		                <th>거래유형</th>
+		                <th>설명</th>
+		                <th>금액</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <!-- 거래내역이 없으면 "거래내역이 없습니다." 메시지 출력 -->
+		            <c:if test="${empty transactions}">
+		                <tr><td colspan="4">거래내역이 없습니다.</td></tr>
+		            </c:if>
+		
+		            <!-- 거래내역이 있을 경우 출력 -->
+		            <c:forEach var="transaction" items="${transactions}">
+					    <tr>
+					        <td>${transaction.created_at}</td>
+					        <td>${transaction.transaction_type}</td>
+					        <td>${transaction.description}</td>
+					        <td>
+					            <c:choose>
+					                <c:when test="${transaction.transaction_type == 'DEPOSIT'}">
+					                    +${transaction.cost} 원
+					                </c:when>
+					                <c:otherwise>
+					                    -${transaction.cost} 원
+					                </c:otherwise>
+					            </c:choose>
+					        </td>
+					    </tr>
+					</c:forEach>
+		        </tbody>
+		    </table>
+		</div>
+		</body>
 <script src="webjars/jquery/3.6.0/jquery.min.js"></script> 
 <script>
 $(document).ready(function () {

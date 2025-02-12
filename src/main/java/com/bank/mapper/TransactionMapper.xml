@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bank.mapper.TransactionMapper">
+	
+	<resultMap id="TransactionResultMap" type="com.bank.dto.TransactionDTO">
+	    <result property="id" column="id"/>
+	    <result property="account_id" column="account_id"/>
+	    <result property="transaction_type" column="transaction_type"/>
+	    <result property="description" column="description"/>
+	    <result property="cost" column="cost"/>
+	    <result property="created_at" column="created_at"/>
+	</resultMap>
+	
+	<select id="getTransactionsByAccountId" resultMap="TransactionResultMap">
+	    SELECT id, account_id, transaction_type, description, cost, created_at 
+	    FROM TransactionHistory 
+	    WHERE account_id = #{accountId}
+	</select>
+
+    <insert id="insertTransaction" parameterType="com.bank.dto.TransactionDTO">
+	    INSERT INTO TransactionHistory(account_id, transaction_type, description, cost, created_at)
+	    VALUES(#{account_id}, CAST(#{transaction_type} AS CHAR), #{description}, #{cost}, NOW())
+	</insert>
+</mapper>
