@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -123,12 +124,15 @@ button:hover {
   <div class="login-section">
     <h1>Welcome Back 🖐 </h1>
     <p>고객님의 무궁한 발전을 희망합니다. </p>
-    <form action="/auth/login" method="post">
+    <c:if test="${not empty error}">
+    	<p> ${error} </p>
+	</c:if>
+    <form action="/login-page" method="post">
       <div class="input-group">
-        <input type="text" placeholder="아이디" required>
+        <input name="userid" type="text" placeholder="아이디" required>
       </div>
       <div class="input-group">
-        <input type="password" placeholder="비밀번호" required>
+        <input name="password" type="password" placeholder="비밀번호" required>
       </div>
       <button type="submit">로그인</button>
     </form>

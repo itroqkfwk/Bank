@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.bank.dto.MemberDTO;
 
+import jakarta.validation.Valid;
+
 
 @Mapper
 public interface MemberMapper {
@@ -15,5 +17,6 @@ public interface MemberMapper {
 	public MemberDTO login(Map<String, String> map);
 	public MemberDTO mypage(String userid);
 	public MemberDTO findByUserid(String userid);
+//	public MemberDTO authenticate(Map<String, String> map);
 	
 }

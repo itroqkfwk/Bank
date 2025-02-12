@@ -63,7 +63,10 @@ public class NoticeServiceImpl implements NoticeService {
 	public int addNotice(RequestNoticeDTO requestNoticeDTO) {
 		return noticeMapper.addNotice(requestNoticeDTO);
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 94d020609a536cd182bad5c99244e01d08109c7f
 	@Override
 	public String upload(MultipartFile file) throws IOException {
 	    // 1. 파일 저장 경로 설정

@@ -145,16 +145,16 @@ public class AccountController {
     
     
     @GetMapping("/transactions")
-    public String getTransactionHistory(@RequestParam("accountId") Long accountId, Model model) {
-    	if (accountId == null) {
+    public String getTransactionHistory(@RequestParam("accountId") Long account_id, Model model) {
+    	if (account_id == null) {
             log.error("accountId가 전달되지 않았습니다.");
             model.addAttribute("message", "잘못된 요청입니다. 계좌를 선택해주세요.");
             return "my-page";
         }
 
-        log.info("Account ID: {}", accountId);
+        log.info("Account ID: {}", account_id);
 
-        List<TransactionDTO> transactions = transactionService.getTransactionsByAccountId(accountId);
+        List<TransactionDTO> transactions = transactionService.getTransactionsByAccountId(account_id);
         log.info("조회된 거래 내역: {}", transactions);  
 
         model.addAttribute("transactions", transactions);

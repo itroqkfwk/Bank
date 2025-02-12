@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
+<%
+    String userid = (String) session.getAttribute("userid");
+%>
 <meta charset="UTF-8">
 <title>Back Start Bank</title>
 <style>
@@ -84,8 +88,14 @@ header .brand-icon {
 	  </h1>
 	  <nav>
 	    <ul class="navlist-group">
-	      <li><a href="/login-page">로그인</a></li>
-	      <li><a href="/signup-page">회원가입</a></li>
+	        <c:if test="${not empty username}">
+    			<p> 환영합니다. ${username} 님 </p>
+	      		<li><a href="/logout">로그아웃</a></li>
+    		</c:if>
+	        <c:if test="${empty userid}">
+	      		<li><a href="/login-page">로그인</a></li>
+	      		<li><a href="/signup-page">회원가입</a></li>
+			</c:if>
 	    </ul>
 	  </nav>
 	</header>
