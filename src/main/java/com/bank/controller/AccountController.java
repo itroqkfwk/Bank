@@ -58,6 +58,15 @@ public class AccountController {
             int offset = page * size;
             List<AccountDTO> accounts = accountService.getAccountsByUserId(id, offset, size);
             
+            
+            Integer accountId = accounts.stream().map(account -> account.getId()).toList().get(0);
+            log.info("Account ID: {}", accountId);
+
+            List<TransactionDTO> transactions = transactionService.getTransactionsByAccountId(accountId);
+            log.info("조회된 거래 내역: {}", transactions);  
+
+           
+             accountService.getAccountById(accountId);
             MemberDTO memberDto =  memberService.findByUserid(userid);
             
             MypageUserInfoDTO mypageUserInfo  = MypageUserInfoDTO.builder()
@@ -75,6 +84,7 @@ public class AccountController {
             
             log.info("totalPages:{}, totalAccounts: {}, offset: {}, page:{}, size:{}", totalPages, totalAccounts, offset, page, size);
             
+            model.addAttribute("transactions", transactions);
             model.addAttribute("accounts", accounts);
             model.addAttribute("userInfo", mypageUserInfo);
             model.addAttribute("UserInfoUpdateDTO", mypageUserInfo);
@@ -197,20 +207,20 @@ public class AccountController {
     }
     
     
-    @GetMapping("/transactions")
-    public String getTransactionHistory(@RequestParam("accountId") Long account_id, Model model) {
-    	if (account_id == null) {
-            log.error("accountId가 전달되지 않았습니다.");
-            model.addAttribute("message", "잘못된 요청입니다. 계좌를 선택해주세요.");
-            return "my-page";
-        }
-
-        log.info("Account ID: {}", account_id);
-
-        List<TransactionDTO> transactions = transactionService.getTransactionsByAccountId(account_id);
-        log.info("조회된 거래 내역: {}", transactions);  
-
-        model.addAttribute("transactions", transactions);
-        return "my-page"; 
-    }
+//    @GetMapping("/transactions")
+//    public String getTransactionHistory(@RequestParam("accountId") Long account_id, Model model) {
+//    	if (account_id == null) {
+//            log.error("accountId가 전달되지 않았습니다.");
+//            model.addAttribute("message", "잘못된 요청입니다. 계좌를 선택해주세요.");
+//            return "my-page";
+//        }
+//
+//        log.info("Account ID: {}", account_id);
+//
+//        List<TransactionDTO> transactions = transactionService.getTransactionsByAccountId(account_id);
+//        log.info("조회된 거래 내역: {}", transactions);  
+//
+//        model.addAttribute("transactions", transactions);
+//        return "my-page"; 
+//    }
 }

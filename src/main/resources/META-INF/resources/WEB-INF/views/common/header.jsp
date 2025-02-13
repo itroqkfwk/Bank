@@ -40,14 +40,13 @@ header {
   background: transparent;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  
+  align-items: center; 
 }
 
 header h1 a {
   display: flex;
   align-items: center;
-    color:white;
+  color:white;
 }
 
 header .brand-icon {

@@ -145,7 +145,7 @@ public class AccountServiceImpl implements AccountService {
         transactionMapper.insertTransaction(transaction);
     }
 
-    public List<TransactionDTO> getTransactionsByAccountId(Long accountId) {
+    public List<TransactionDTO> getTransactionsByAccountId(Integer accountId) {
         return transactionMapper.getTransactionsByAccountId(accountId);
     }
     
