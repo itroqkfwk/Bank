@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,6 +166,66 @@
                 margin-left: 0;
             }
         }
+        
+        
+        .modal-overlay{
+			position: fixed;
+			left:0;
+			right:0;
+			top:0;
+			bottom:0;
+			background:rgba(0,0,0,0.5);
+        	transition:0.5s;
+			visibility: hidden;
+			opacity:0;
+        }
+        
+        .modal {
+            position: fixed;
+        	max-width:650px;
+        	padding:40px;
+        	width:100%;
+        	background:white;
+        	box-shadow=0 0 20px 3px rgba(0,0,0,0.5);
+			border-radius:20px;
+			height:auto;
+			z-index:100000000000;
+        	max-height:600px;
+        	left:50%;
+        	top:50%;
+        	transform:translate(-50%,-50%);
+        }
+        
+		.modal-header{
+			display:flex;
+			justify-content: space-between;
+			padding: 0 5px 0 5px;
+		}
+		.modal-body{
+			margin-top:1rem;
+		}
+		
+		.close-button{
+			border:none;
+			font-size:1.25rem;
+			background:none;
+		}
+		
+		.close-button:hover{
+			cursor: pointer;
+			
+			
+		}
+		.close-button:active {
+			color:gray;
+		}
+		.btn-cancel{
+			background:tomato;
+		}
+		
+		input::disabled {
+			background:rgba(0,0,0,0.3);
+		}
 </style>
 </head>
 <body>
@@ -191,12 +253,14 @@
 
                 <div class="info-group">
                     <div class="info-label">이름</div>
-                    <div class="info-value">홍길동</div>
+                    <div class="info-value">
+						${userInfo.username}
+                    </div>
                 </div>
 
                 <div class="info-group">
                     <div class="info-label">아이디</div>
-                    <div class="info-value">hong123</div>
+                    <div class="info-value">${userInfo.userid}</div>
                 </div>
 
                 <div class="info-group">
@@ -206,7 +270,7 @@
 
                 <div class="info-group">
                     <div class="info-label">주소</div>
-                    <div class="info-value">서울특별시 강남구 테헤란로 123</div>
+                    <div class="info-value">${userInfo.address}</div>
                 </div>
 
                 <button class="edit-button">정보 수정</button>
@@ -228,6 +292,120 @@
                     <div class="info-value">2025.01.15</div>
                 </div>
             </div>
-        </div>
+            </div>
+    
+    <!-- 수정 모달 -->
+    
+    <div 
+    	class="modal-overlay" 
+    	id="editModal">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">정보 수정</span>
+                <button class="close-button">×</button>
+            </div>
+            <div class="modal-body">
+                <form:form 
+                		id="editForm" 
+                		modelAttribute="UserInfoUpdateDTO"
+                		action="/my-info-update" 
+						method="post">
+                
+	                <!-- 이름 -->
+                    <div class="form-group">
+                        <label class="form-label">이름</label>
+                        <form:input 
+                        		type="text" 
+                        		path="username" 
+                        		class="form-input"
+                        		disabled="disabled" 
+                        		/>
+                    </div>
+                    
+                    <!-- 아이디 -->
+                    <div class="form-group">
+                        <label class="form-label">아이디</label>
+                        <form:input 
+                        		type="text"
+                        		path="userid" 
+                        		class="form-input" 
+                        		disabled="disabled"
+                        		/>
+                    </div>
+                    
+                    <!-- 비밀번호 -->
+                    <div class="form-group">
+                        <label class="form-label">비밀번호</label>
+                        <form:input 
+                        		type="password" 
+                        		path="password" 
+                        		class="form-input" 
+                        		placeholder="새 비밀번호를 입력하세요"/>
+                    </div>
+                    
+                    <!-- 주소 -->
+                    <div class="form-group">
+                        <label class="form-label">주소</label>
+                        <form:input 
+                        		type="text"
+                        		path="address" 
+                        		class="form-input" 
+                        		/>
+                    </div>
+                    <div class="modal-footer">
+		                <button class="btn btn-cancel" type="reset">취소</button>
+		                <button class="btn btn-save" type="submit">저장</button>
+            		</div>
+                </form:form>
+            </div>
+   </div>
+   </div>  
 </body>
+<script>
+	const userInfoEditBtn = document.querySelector(".edit-button");
+	const formCloseBtn = document.querySelector(".close-button");
+	
+	const userinfoUpdateForm = document.querySelector(".modal-overlay");
+	let isOpen = true;
+	
+	
+	userInfoEditBtn.addEventListener("click",()=>{
+		
+		if(isOpen == true){
+		userinfoUpdateForm.style.cssText=`
+			transition:0.5s;
+			visibility: visible;
+			opacity:1;
+		`;
+		
+		isOpen = false;
+		} else {
+			userinfoUpdateForm.style.cssText=`
+				transition:0.5s;
+				visibility: hidden;
+				opacity:0;
+			`
+			
+		isOpen = true;
+		}
+	})
+	
+		formCloseBtn.addEventListener("click",()=>{
+		
+		if(isOpen == true){
+		userinfoUpdateForm.style.cssText=`
+			transition:1s;
+			visibility: visible;
+			opacity:1;
+		`
+		} else {
+			userinfoUpdateForm.style.cssText=`
+				transition:1s;
+				visibility: hidden;
+				opacity:0;
+			`	
+		}
+	})
+	
+</script>
 </html>

@@ -7,26 +7,17 @@
 <title>Insert title here</title>
 </head>
 <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #1A365D;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
+  
         .container {
+        	margin:4rem auto;
             background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-height:700px;
+            padding: 40px;
+            border-radius: 20px;
+            max-height:600px;
             height:100%;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 768px;
         }
 
         h1 {

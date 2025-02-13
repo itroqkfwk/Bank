@@ -270,18 +270,60 @@
             }
         }
         
+        .guide-message {
+        	width:100%;
+        	height:100vh;
+        	display:flex;
+        	align-items:center;
+        	justify-content:center;
+        }
+        
+        .guide-message .message-group {
+        	display:flex;
+        	flex-direction: column;
+        	justify-content: center;
+        	align-items:center;
+        }
+        .guide-message .message-group p{
+          	font-size:1.05rem;
+        }
+        .guide-message .message-group svg{
+          	width:48px;
+          	height:48px;
+       
+          }
+        
 </style>
 </head>
+<%
+	String userid =  (String) session.getAttribute("userid");
+%>
 <body>
 			<script>
 		        window.onload = function() {
 		            var message = '${message}';  // 전달된 메시지 가져오기
 		            if (message) {
 		                alert(message);  // 메시지를 팝업으로 띄운다
+		                
 		            }
 		        }
 		    </script>
-		    
+		  
+		  
+		<c:if test="${empty userid}">
+			<div class="guide-message"> 
+				<div class="message-group">
+					
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="size-6">
+					  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+					</svg>
+					<p>로그인 후 이용 가능합니다.</p>
+				</div>
+			</div>
+		
+		</c:if>
+		
+		<c:if test="${not empty userid}">
 	        <!-- 메인 콘텐츠 -->
         <div class="main-content">
             <div class="content-header">
@@ -323,12 +365,7 @@
 				    </div>
 				</c:if>
 
-			
-
-
-
-            
-			            <!-- 계좌 개설 폼 -->
+			        <!-- 계좌 개설 폼 -->
 						<div class="card">
 						    <h2 style="margin-bottom: 20px;">계좌 개설</h2>
 						    <form action="/add" method="post">
@@ -348,6 +385,7 @@
 						    </form>
 						</div>
 						</div>
+		</c:if>
 
 </body>
 </html>

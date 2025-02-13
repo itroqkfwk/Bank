@@ -13,6 +13,7 @@ public interface MemberService {
 	
 	public MemberDTO idCheck(String userid);
 	public int memberAdd(MemberDTO dto);
+	public int memberUpdate(MemberDTO dto);
 	public MemberDTO login(Map<String, String> map);
 	public MemberDTO mypage(String userid);
 	public MemberDTO findByUserid(String userid);

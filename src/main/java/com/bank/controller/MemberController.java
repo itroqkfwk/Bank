@@ -67,7 +67,7 @@ public class MemberController {
 		
 		logger.info("LOGGER: dto: {}" , dto);
 		
-		String address = "(" + dto.getAddress1() + ")" + dto.getAddress2() + dto.getAddress3() + dto.getAddress4() + dto.getAddress5();
+		String address = "(" + dto.getAddress1() + ")" + dto.getAddress2() + dto.getAddress3() + dto.getAddress4();
 		
 		// 비밀번호 암호화 (필수***************, 안하면 에러남)
 		String pw = dto.getPassword();	// 암호화 되지 않은 pw : 1234
@@ -121,6 +121,7 @@ public class MemberController {
     			 httpServletRequest.getSession().invalidate();
     		        HttpSession session = httpServletRequest.getSession(true);  // Session이 없으면 생성
     		        // 세션에 userId를 넣어줌
+    		        session.setAttribute("id", memberDto.getId());
     		        session.setAttribute("userid", memberDto.getUserid());
     		        session.setAttribute("username", memberDto.getUsername());
     		        session.setMaxInactiveInterval(1800); // Session이 30분동안 유지
@@ -138,36 +139,3 @@ public class MemberController {
 	
 }
 	
-	
-	
-//	@GetMapping("/mypage")
-//	public String mypage(Model m) {
-//		
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        MemberDTO dto = (MemberDTO)auth.getPrincipal();
-//		
-//		String userid = dto.getUserid();
-//		MemberDTO mypageDTO = service.mypage(userid);
-//		m.addAttribute("login", mypageDTO);
-//		
-//		return "mypage";
-//	}
-	
-
-
-
-//id 중복체크
-//	@GetMapping("/idCheck")
-//	@ResponseBody
-//	public String idCheck(@RequestParam String userid) {
-//		
-//		String mesg = "아이디 사용 가능";
-//		
-//		MemberDTO dto = service.idCheck(userid);
-//		
-//		if(dto!=null) {
-//			mesg = "아이디 중복";
-//		}
-//		
-//		return mesg;
-//	}

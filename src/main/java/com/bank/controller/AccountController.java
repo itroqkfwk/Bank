@@ -1,8 +1,10 @@
 package com.bank.controller;
 
 import com.bank.service.AccountService;
+import com.bank.service.MemberService;
 import com.bank.service.TransactionService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +26,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import com.bank.dto.AccountDTO;
+import com.bank.dto.MemberDTO;
+import com.bank.dto.MypageUserInfoDTO;
 import com.bank.dto.TransactionDTO;
+import com.bank.dto.UserInfoUpdateDTO;
 import com.bank.exception.AccountException;
 
 @Slf4j
@@ -33,6 +39,7 @@ import com.bank.exception.AccountException;
 public class AccountController {
 
     private final AccountService accountService;
+    private final MemberService memberService;
     
     private final TransactionService transactionService;
     
@@ -44,19 +51,35 @@ public class AccountController {
                               @RequestParam(defaultValue = "5") int size,
                               Model model) {
     	
-        session.setAttribute("user_id", 1);  // 여기서 1은 테스트용 user_id
-    	Integer user_id = (Integer) session.getAttribute("user_id");
+    	Integer id = (Integer) session.getAttribute("id");
+    	String userid = (String) session.getAttribute("userid");
 
-        if (user_id != null) {
+        if (id != null) {
             int offset = page * size;
-            List<AccountDTO> accounts = accountService.getAccountsByUserId(user_id, offset, size);
-
-            model.addAttribute("accounts", accounts);
+            List<AccountDTO> accounts = accountService.getAccountsByUserId(id, offset, size);
             
-            int totalAccounts = accountService.getTotalAccountsByUserId(user_id);
+            MemberDTO memberDto =  memberService.findByUserid(userid);
+            
+            MypageUserInfoDTO mypageUserInfo  = MypageUserInfoDTO.builder()
+            		.id(memberDto.getId())
+            		.userid(memberDto.getUserid())
+            		.username(memberDto.getUsername())
+            		.password(memberDto.getPassword())
+            		.address(memberDto.getAddress())
+            		.build();
+
+
+            
+            int totalAccounts = accountService.getTotalAccountsByUserId(id);
             int totalPages = (int) Math.ceil((double) totalAccounts / size);
             
-            model.addAttribute("totalPages", totalPages);
+            log.info("totalPages:{}, totalAccounts: {}, offset: {}, page:{}, size:{}", totalPages, totalAccounts, offset, page, size);
+            
+            model.addAttribute("accounts", accounts);
+            model.addAttribute("userInfo", mypageUserInfo);
+            model.addAttribute("UserInfoUpdateDTO", mypageUserInfo);
+            model.addAttribute("userInfo", mypageUserInfo);
+            model.addAttribute("totalPages", totalPages ==0? 1 : totalPages);
             model.addAttribute("currentPage", page);
         } else {
             model.addAttribute("message", "로그인 후 이용해 주세요.");
@@ -79,11 +102,11 @@ public class AccountController {
                              RedirectAttributes redirectAttributes) {
 
     	//로그인 없이 test위해 주석처리
-        Integer user_id = (Integer) session.getAttribute("user_id");
-//        if (user_id == null) {
-//            redirectAttributes.addFlashAttribute("message", "사용자 정보가 없습니다. 로그인 후 다시 시도해주세요.");
-//            return "redirect:/login-page";  
-//        }
+        Integer id = (Integer) session.getAttribute("id");
+        if (id == null) {
+            redirectAttributes.addFlashAttribute("message", "사용자 정보가 없습니다. 로그인 후 다시 시도해주세요.");
+            return "redirect:/login-page";  
+        }
 
         if (accountService.existsByAccountNo(account_no) > 0) {
             redirectAttributes.addFlashAttribute("message", "중복된 계좌 번호입니다. 다른 계좌 번호를 입력해주세요.");
@@ -100,7 +123,7 @@ public class AccountController {
             return "redirect:/mypage";
         }
 
-        AccountDTO account = new AccountDTO(account_name, account_no, money, 1);  //추후에 1을 user_id로 변경 해야됨
+        AccountDTO account = new AccountDTO(account_name, account_no, money, id);  //추후에 1을 user_id로 변경 해야됨
         accountService.addAccount(account);  
 
         redirectAttributes.addFlashAttribute("message", "씨뱅크 계좌 추가 성공!");
@@ -143,6 +166,36 @@ public class AccountController {
         return "redirect:/mypage";
     }
     
+    // 사용자 정보 수정
+    @PostMapping("/my-info-update")
+    public String getMyInfoUpdatePage(
+    		@ModelAttribute UserInfoUpdateDTO userInfo, 
+    		RedirectAttributes redirectAttributes
+    		) {
+    		
+    	
+    	log.info("유저정보: {}", userInfo);
+    	
+    	MemberDTO originMemberDTO = memberService.findByUserid(userInfo.getUserid());
+    	
+    	MemberDTO updatedMemberDTO = MemberDTO.builder()
+    	.id(originMemberDTO.getId())
+    	.userid(userInfo.getUserid())
+    	.username(userInfo.getUsername())
+    	.email(originMemberDTO.getEmail())
+    	.address(userInfo.getAddress())
+    	.password(originMemberDTO.getPassword())
+    	.build();
+    	
+    	int n = memberService.memberUpdate(updatedMemberDTO);
+    	if(n == 0) {
+    		redirectAttributes.addFlashAttribute("message","유저정보 수정 실패");
+    	} else {
+    		redirectAttributes.addFlashAttribute("message","유저정보 수정 성공");
+    	}
+    	return "redirect:/mypage";
+    }
+    
     
     @GetMapping("/transactions")
     public String getTransactionHistory(@RequestParam("accountId") Long account_id, Model model) {
@@ -160,7 +213,4 @@ public class AccountController {
         model.addAttribute("transactions", transactions);
         return "my-page"; 
     }
-    
-    
-    
 }
