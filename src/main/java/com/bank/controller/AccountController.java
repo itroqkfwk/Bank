@@ -49,6 +49,7 @@ public class AccountController {
     @GetMapping("/mypage")
     public String accountPage(@RequestParam(defaultValue = "0") int page, 
                               @RequestParam(defaultValue = "5") int size,
+                              RedirectAttributes redirectAttributes,
                               Model model) {
     	
     	Integer id = (Integer) session.getAttribute("id");
@@ -57,9 +58,21 @@ public class AccountController {
         if (id != null) {
             int offset = page * size;
             List<AccountDTO> accounts = accountService.getAccountsByUserId(id, offset, size);
+            log.info("acid:{}", accounts);
             
+            if(accounts == null) {
+            	   redirectAttributes.addFlashAttribute("error", "계좌정보가 존재하지 않음");
+                   return "redirect:error-page";
+            }
             
-            Integer accountId = accounts.stream().map(account -> account.getId()).toList().get(0);
+            List<Integer> accountList = accounts.stream().map(account -> account.getId()).toList();
+            
+            if(accountList.isEmpty()) {
+            	 redirectAttributes.addFlashAttribute("message", "거래 내역이 없습니다.");
+            } 
+            
+            Integer accountId = accountList.get(0);
+            
             log.info("Account ID: {}", accountId);
 
             List<TransactionDTO> transactions = transactionService.getTransactionsByAccountId(accountId);
