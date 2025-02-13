@@ -2,20 +2,19 @@ package com.bank.service;
 
 import com.bank.dto.TransactionDTO;
 import com.bank.mapper.TransactionMapper;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionMapper transactionMapper;
-
-    @Autowired
-    public TransactionServiceImpl(TransactionMapper transactionMapper) {
-        this.transactionMapper = transactionMapper;
-    }
 
     @Override
     public void addTransaction(TransactionDTO transaction) {
@@ -23,7 +22,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<TransactionDTO> getTransactionsByAccountId(Long account_id) {
+    public List<TransactionDTO> getTransactionsByAccountId(Integer account_id) {
         return transactionMapper.getTransactionsByAccountId(account_id);
     }
 }
